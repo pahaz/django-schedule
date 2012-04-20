@@ -14,7 +14,7 @@ class UpcomingEventsFeed(Feed):
     def feed_title(self, obj):
         return "Upcoming Events for %s" % obj.name
     
-    def get_object(self, bits):
+    def get_object(self, request, bits):
         if len(bits) != 1:
             raise ObjectDoesNotExist
         return Calendar.objects.get(pk=bits[0])
