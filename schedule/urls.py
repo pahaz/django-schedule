@@ -90,9 +90,7 @@ url(r'^occurrence/edit/(?P<event_id>\d+)/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d
 
 
 #feed urls 
-url(r'^feed/calendar/(.*)/$',
-    'django.contrib.syndication.views.feed', 
-    { "feed_dict": { "upcoming": UpcomingEventsFeed } }),
+#url(r'^feed/calendar/(.*)/$', UpcomingEventsFeed()),
  
 (r'^ical/calendar/(.*)/$', CalendarICalendar()),
 
