@@ -1,12 +1,9 @@
 from urllib import quote
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.create_update import delete_object
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.views.generic.create_update import delete_object
 import datetime
 
 from schedule.conf.settings import GET_EVENTS_FUNC, OCCURRENCE_CANCEL_REDIRECT
@@ -14,6 +11,7 @@ from schedule.forms import EventForm, OccurrenceForm
 from schedule.models import *
 from schedule.periods import weekday_names
 from schedule.utils import check_event_permissions, coerce_date_dict
+
 
 def calendar(request, calendar_slug, template='schedule/calendar.html'):
     """
@@ -31,6 +29,7 @@ def calendar(request, calendar_slug, template='schedule/calendar.html'):
     return render_to_response(template, {
         "calendar": calendar,
     }, context_instance=RequestContext(request))
+
 
 def calendar_by_periods(request, calendar_slug, periods=None,
     template_name="schedule/calendar_by_period.html"):
@@ -77,13 +76,15 @@ def calendar_by_periods(request, calendar_slug, periods=None,
         date = datetime.datetime.now()
     event_list = GET_EVENTS_FUNC(request, calendar)
     period_objects = dict([(period.__name__.lower(), period(event_list, date)) for period in periods])
-    return render_to_response(template_name,{
+
+    return render_to_response(template_name, {
             'date': date,
             'periods': period_objects,
             'calendar': calendar,
             'weekday_names': weekday_names,
-            'here':quote(request.get_full_path()),
-        },context_instance=RequestContext(request),)
+            'here': quote(request.get_full_path()),
+        }, context_instance=RequestContext(request),)
+
 
 def event(request, event_id, template_name="schedule/event.html"):
     """
@@ -108,8 +109,9 @@ def event(request, event_id, template_name="schedule/event.html"):
         cal = None
     return render_to_response(template_name, {
         "event": event,
-        "back_url" : back_url,
+        "back_url": back_url,
     }, context_instance=RequestContext(request))
+
 
 def occurrence(request, event_id,
     template_name="schedule/occurrence.html", *args, **kwargs):
@@ -152,7 +154,7 @@ def edit_occurrence(request, event_id,
     return render_to_response(template_name, {
         'form': form,
         'occurrence': occurrence,
-        'next':next,
+        'next': next,
     }, context_instance=RequestContext(request))
 
 
@@ -165,11 +167,11 @@ def cancel_occurrence(request, event_id,
     conformation to cancel.
     """
     event, occurrence = get_occurrence(event_id, *args, **kwargs)
-    next = kwargs.get('next',None) or get_next_url(request, event.get_absolute_url())
+    next = kwargs.get('next', None) or get_next_url(request, event.get_absolute_url())
     if request.method != "POST":
         return render_to_response(template_name, {
             "occurrence": occurrence,
-            "next":next,
+            "next": next,
         }, context_instance=RequestContext(request))
     occurrence.cancel()
     return HttpResponseRedirect(next)
@@ -201,7 +203,7 @@ def get_occurrence(event_id, occurrence_id=None, year=None, month=None,
 
 @check_event_permissions
 def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
-    template_name='schedule/create_event.html', form_class = EventForm):
+    template_name='schedule/create_event.html', form_class=EventForm):
     """
     This function, if it receives a GET request or if given an invalid form in a
     POST request it will generate the following response
@@ -270,7 +272,7 @@ def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
     return render_to_response(template_name, {
         "form": form,
         "calendar": calendar,
-        "next":next
+        "next": next
     }, context_instance=RequestContext(request))
 
 
@@ -288,13 +290,14 @@ def delete_event(request, event_id, next=None, login_required=True):
     next = next or reverse('day_calendar', args=[event.calendar.slug])
     next = get_next_url(request, next)
     return delete_object(request,
-                         model = Event,
-                         object_id = event_id,
-                         post_delete_redirect = next,
-                         template_name = "schedule/delete_event.html",
-                         extra_context = dict(next=next),
-                         login_required = login_required
+                         model=Event,
+                         object_id=event_id,
+                         post_delete_redirect=next,
+                         template_name="schedule/delete_event.html",
+                         extra_context=dict(next=next),
+                         login_required=login_required
                         )
+
 
 def check_next_url(next):
     """
@@ -304,6 +307,7 @@ def check_next_url(next):
     if not next or '://' in next:
         return None
     return next
+
 
 def get_next_url(request, default):
     next = default

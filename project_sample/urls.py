@@ -6,7 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', direct_to_template,{"template":"homepage.html"}),
+    url(r'^$', direct_to_template, {"template": "homepage.html"}),
     (r'^schedule/', include('schedule.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
@@ -14,13 +14,10 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^admin/(.*)', admin.site.root),
+    (r'^admin/', admin.site.root),
 )
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^site_media/(?P<path>.*)$',
-         'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     )
-
