@@ -6,7 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', direct_to_template,{"template":"homepage.html"}),
+    url(r'^$', direct_to_template, {"template": "homepage.html"}),
     (r'^schedule/', include('schedule.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
@@ -19,7 +19,5 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^site_media/(?P<path>.*)$',
-         'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     )

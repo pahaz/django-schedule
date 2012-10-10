@@ -101,8 +101,8 @@ WSGI_APPLICATION = 'project_sample.wsgi.application'
 
 TEMPLATE_DIRS = (
     # uncomment this to use ajax week view
-    os.path.join(PROJECT_DIR,"schedule_weekcal/templates"),
-    os.path.join(PROJECT_DIR,"templates"),
+    os.path.join(PROJECT_DIR, "schedule_weekcal/templates"),
+    os.path.join(PROJECT_DIR, "templates"),
 )
 
 INSTALLED_APPS = (
@@ -156,4 +156,4 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 
-FIRST_DAY_OF_WEEK = 1 # Monday
+FIRST_DAY_OF_WEEK = 1  # Monday
