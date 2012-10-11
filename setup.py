@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
- 
+from setuptools import setup
+
+
 setup(
     name='django-schedule',
     version='0.5b',
@@ -10,13 +11,13 @@ setup(
     author_email='thauber@gmail.com',
     url='http://github.com/thauber/django-schedule/tree/master',
     packages=[
-        'schedule',
-        'schedule.feeds',
-        'schedule.management',
-        'schedule.management.commands',
-        'schedule.models',
-        'schedule.templatetags',
-        'schedule.tests',
+        'events',
+        'events.feeds',
+        'events.management',
+        'events.management.commands',
+        'events.models',
+        'events.templatetags',
+        'events.tests',
     ],
     include_package_data=True,
     zip_safe=False,
@@ -30,5 +31,5 @@ setup(
                  'Topic :: Utilities'],
     install_requires=['setuptools', 'vobject', 'python-dateutil'],
     license='BSD',
-    test_suite = "schedule.tests",
+    test_suite="events.tests",
 )
