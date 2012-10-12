@@ -200,16 +200,16 @@ def next_url(target, slug, period):
             querystring_for_date(period.next().start))
 
 
-@register.inclusion_tag("events/_prevnext.html")
-def prevnext(target, slug, period, fmt=None):
+@register.inclusion_tag("events/_prevnext.html", takes_context=True)
+def prevnext(context, target, slug, period, fmt=None):
     if fmt is None:
         fmt = settings.DATE_FORMAT
-    context = {
+    context.update({
         'slug': slug,
         'period': period,
         'period_name': format(period.start, fmt),
         'target': target,
-    }
+    })
     return context
 
 
