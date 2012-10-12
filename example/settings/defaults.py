@@ -1,4 +1,4 @@
-# Django settings for project_sample project.
+# Django settings for example project.
 import os
 
 PROJECT_DIR = os.path.abspath('%s/../' % os.path.dirname(__file__))
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '%s/project_sample.db' % PROJECT_DIR,
+        'NAME': '%s/example.db' % PROJECT_DIR,
     }
 }
 
@@ -91,10 +91,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'project_sample.urls'
+ROOT_URLCONF = 'example.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'project_sample.wsgi.application'
+WSGI_APPLICATION = 'example.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, "templates"),
