@@ -162,7 +162,7 @@ td.small div.header a {
 
 td.daynumber div.eventcell {
     background:#f0f0f0;
-    border:1px dotted grey;
+    border:1px solid #ff9b9b;
     clear:both;
     cursor:pointer;
     margin:0 1px 3px 1px;
@@ -175,10 +175,11 @@ td.daynumber div.starttime {
 }
 
 td.daynumber div.eventdesc {
-    float:left;
-    height:1em;
-    overflow:hidden;
-    width:75px;
+    float: left;
+    /*height: 1em;
+    overflow: hidden;
+    width: 75px;
+    line-height: 20px;*/
 }
 
 /**** WEEK VIEW ****/

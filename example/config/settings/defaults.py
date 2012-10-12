@@ -148,6 +148,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'utils.context_processors.site',
 )
 
 FIRST_DAY_OF_WEEK = 1  # Monday
