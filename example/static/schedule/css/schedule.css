@@ -96,6 +96,27 @@ div.event_options div.buttons {
 div.occ span.actions {display:block;float:right;padding-right:3px;}
 div.occ span.actions span.edit {padding-right:3px;}
 
+
+/* MONTH TOP NAV
+---------------------------------------- */
+.cal-top-nav {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.cal-top-nav .pull-left div {
+    float: left;
+    margin-right: 10px;
+}
+
+.cal-top-nav .period-name {
+    height: 20px;
+    line-height: 20px;
+    padding: 6px 0px;
+}
+
+
 /**** MONTH TABLE ****/
 
 table.calendar {
