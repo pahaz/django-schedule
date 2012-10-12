@@ -3,9 +3,9 @@ from django.conf import settings
 from django import template
 from django.core.urlresolvers import reverse
 from django.utils.dateformat import format
-from events.conf.settings import CHECK_PERMISSION_FUNC
-from events.models import Calendar, Rule
-from events.periods import weekday_names, weekday_abbrs
+from ..conf.settings import CHECK_PERMISSION_FUNC
+from ..models import Calendar, Rule
+from ..periods import weekday_names, weekday_abbrs
 
 register = template.Library()
 
