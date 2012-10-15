@@ -2,6 +2,8 @@
 
 {% load events %}
 
+{% block title %}{{ calendar.name }} ({{ periods.month }} {{ periods.month.year }}){% endblock title %}
+
 {% block body %}
 
 <nav class="cal-top-nav clearfix">
