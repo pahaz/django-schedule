@@ -79,12 +79,10 @@
 
         </div> <!-- /container -->
 
-        <!-- Le javascript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+        {% block bottom_script %}
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
-
+        {% endblock bottom_script %}
 
     </body>
 </html>
