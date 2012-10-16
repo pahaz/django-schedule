@@ -1,31 +1,85 @@
 /* DAILY VIEW
 ---------------------------------------- */
+#day-wrap .time {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    padding: 2px 6px;
+    text-align: right;
+    width: 35px;
+}
+#day-wrap .add-link {
+    position: relative;
+    top: 1px;
+}
+#day-wrap #am-col {
+    position: relative;
+    left: 0px;
+}
+#day-wrap #pm-col {
+    position: relative;
+    left: 0px;
+}
 div.slot_column {
-    top:0px;
-    left:0px;
-    border:1px solid black;
-    border-right:none;
+    top: 0px;
+    left: 0px;
+    border: 1px solid #ddd;
+    border-right: none;
 }
 div.slot {
-    position:absolute;
-    left:0px;
-    border-bottom:1px dotted grey;
+    position: absolute;
+    left: 0px;
+    border-bottom: 1px dotted #ddd;
+}
+div.slot_column div.slot:last-child {
+    border-bottom: none;
 }
 div.occ_column {
-    position:absolute;
-    border:1px solid black;
-    top:0px;
+    position: absolute;
+    border: 1px solid #ddd;
+    top: 0px;
 }
 div.occ {
-    position:absolute;
-    border:1px solid red;
-    background-color:#eee;
-    cursor:pointer;
-    overflow:hidden;
+    position: absolute;
+    margin-top: -1px;
+    margin-left: -1px;
+    border: 1px solid #c4c4c4;
+    background-color: #f6f6f6;
+    cursor: pointer;
+    overflow: hidden;
+    width: 450px !important;
+}
+div.occ .title {
+    color: #6e6e6e;
+    position: relative;
+    top: 2px;
+    left: 4px;
+}
+a.edit-link {
+    display: block;
+    width: 14px;
+    height: 14px;
+}
+div.occ:hover {
+    background-color: #e5e5e5;
 }
 div.occ a:hover {
-    background-color:gray;
+    background-color: #ccc;
 }
+div.occ span.actions {
+    display: block;
+    float: right;
+    padding-top: 2px;
+    padding-right: 4px;
+}
+div.occ span.actions span.edit {
+    width: 14px;
+    height: 14px;
+    display: block;
+    float: left;
+    padding-right:3px;
+}
+
 div.occ_column div.cancelled {
     background-color:#FFF;
     border:1px solid black;
@@ -77,9 +131,6 @@ div.event_options div.title {
 div.event_options div.buttons {
     float:right;
 }
-
-div.occ span.actions {display:block;float:right;padding-right:3px;}
-div.occ span.actions span.edit {padding-right:3px;}
 
 
 /* MONTH TOP NAV

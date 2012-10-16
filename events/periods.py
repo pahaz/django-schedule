@@ -1,6 +1,7 @@
 import datetime
+from django.conf import settings
 from django.template.defaultfilters import date
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 from django.utils.dates import WEEKDAYS, WEEKDAYS_ABBR
 from events.conf.settings import FIRST_DAY_OF_WEEK, SHOW_CANCELLED_OCCURRENCES
 from events.models import Occurrence
@@ -268,8 +269,8 @@ class Week(Period):
         return start, end
 
     def __unicode__(self):
-        date_format = u'l, %s' % ugettext("DATE_FORMAT")
-        return ugettext('Week: %(start)s-%(end)s') % {
+        date_format = u'l, %s' % _("DATE_FORMAT")
+        return _('Week: %(start)s-%(end)s') % {
             'start': date(self.start, date_format),
             'end': date(self.end, date_format),
         }
@@ -292,11 +293,7 @@ class Day(Period):
         return start, end
 
     def __unicode__(self):
-        date_format = u'l, %s' % ugettext("DATE_FORMAT")
-        return ugettext('Day: %(start)s-%(end)s') % {
-            'start': date(self.start, date_format),
-            'end': date(self.end, date_format),
-        }
+        return date(self.start, "l, %s" % settings.DATE_FORMAT)
 
     def prev_day(self):
         return Day(self.events, self.start - datetime.timedelta(days=1))
