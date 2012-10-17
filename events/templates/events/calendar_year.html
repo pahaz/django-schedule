@@ -1,33 +1,72 @@
 {% extends "events/base.html" %}
+
 {% load events %}
+
+{% block title %}{{ calendar.name }} ({{ periods.year }}){% endblock title %}
+
 {% block body %}
-<div class="tablewrapper">
-    <div class="calendarname">{{ calendar.name }}</div>
-    {% prevnext "year_calendar" calendar.slug periods.year "Y" %}
-    <table align="center">
-    <tr>
+<nav class="cal-top-nav clearfix">
+
+    <div class="pull-left">
+
+        <div class="today"><a class="btn" href="{% url day_calendar calendar.slug %}">Today</a></div>
+
+        {% prevnext "year_calendar" calendar.slug periods.year "Y" %}
+
+        <div class="period-name">{{ periods.year }}</div>
+
+    </div>
+
+    <div class="pull-right">
+        <div class="other-views btn-group">
+            <a class="btn" href="{% url day_calendar calendar.slug %}{% querystring_for_date periods.year.start 3 %}">Day</a>
+            <a class="btn" href="{% url week_calendar calendar.slug %}{% querystring_for_date periods.year.start 3 %}">Week</a>
+            <a class="btn" href="{% url month_calendar calendar.slug %}{% querystring_for_date periods.year.start 2 %}">Month</a>
+            <a class="btn" href="{% url tri_month_calendar calendar.slug %}{% querystring_for_date periods.year.start 2 %}">3 Month</a>
+            <a class="btn" href="{% url year_calendar calendar.slug %}{% querystring_for_date periods.year.start 1%}">Year</a>
+        </div>
+    </div>
+
+</nav>
+
+<div id="year-wrap">
+
     {% for month in periods.year.get_months %}
-        <td valign="top">
-        <a href="{% url month_calendar calendar.slug %}{% querystring_for_date month.start 2 %}">
-            {{month.name}}
-        </a>
-        {% month_table calendar month "small" %}</td>
-        <td width="12">&nbsp;</td>
-        {% ifequal forloop.counter 3  %}
-            </tr>
-            <tr>
-        {% endifequal %}
-        {% ifequal forloop.counter 6  %}
-            </tr>
-            <tr>
-        {% endifequal %}
-        {% ifequal forloop.counter  9 %}
-            </tr>
-            <tr>
-        {% endifequal %}
+    <div class="month month{{ forloop.counter }}">
+        <h3><a href="{% url month_calendar calendar.slug %}{% querystring_for_date month.start 2 %}">{{month.name}}</a></h3>
+        {% month_table calendar month "small" %}
+    </div>
     {% endfor %}
-    </tr>
-</table></p>
+
+    {# <div class="calendarname">{{ calendar.name }}</div> #}
+    {# {% prevnext "year_calendar" calendar.slug periods.year "Y" %} #}
+    {% comment %}
+    <table align="center">
+        <tr>
+            {% for month in periods.year.get_months %}
+            <td valign="top">
+                <a href="{% url month_calendar calendar.slug %}{% querystring_for_date month.start 2 %}">{{month.name}}</a>
+                {% month_table calendar month "small" %}
+            </td>
+            {% ifequal forloop.counter 3  %}
+        </tr>
+        <tr>
+            {% endifequal %}
+            {% ifequal forloop.counter 6  %}
+        </tr>
+        <tr>
+            {% endifequal %}
+            {% ifequal forloop.counter  9 %}
+        </tr>
+        <tr>
+            {% endifequal %}
+            {% endfor %}
+        </tr>
+    </table>
+    {% endcomment %}
+</div>
+
+{% comment %}
 <div class="navigation">
   <a href="{% url month_calendar calendar.slug %}">
     Current Month Calendar
@@ -36,4 +75,5 @@
     Current Year Calendar
   </a>
 </div>
+{% endcomment %}
 {% endblock %}

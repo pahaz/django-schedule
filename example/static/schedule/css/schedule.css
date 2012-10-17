@@ -375,7 +375,8 @@ div.tablewrapper {
     width: 689px;
     margin: 40px auto;
 }
-#tri-month-wrap .month {
+#tri-month-wrap,
+#year-wrap .month {
     width: 203px;
     float: left;
     margin-right: 40px;
@@ -383,12 +384,28 @@ div.tablewrapper {
 #tri-month-wrap .month3 {
     margin-right: 0px;
 }
-#tri-month-wrap .month h3 {
+#tri-month-wrap .month h3,
+#year-wrap .month h3 {
     font-size: 1em;
     line-height: 1em;
     margin: 0px 0px 10px;
     text-align: center;
 }
-#tri-month-wrap table td.weeknum {
+#tri-month-wrap table td.weeknum,
+#year-wrap table td.weeknum {
     font-size: 0.7em;
+}
+
+
+/* YEAR VIEW
+---------------------------------------- */
+#year-wrap .month {
+    margin-right: 119px;
+    margin-bottom: 40px;
+    min-height: 209px;
+}
+#year-wrap .month4,
+#year-wrap .month8,
+#year-wrap .month12 {
+    margin-right: 0px;
 }
