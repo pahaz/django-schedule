@@ -21,13 +21,14 @@
 
     <div class="pull-right">
         <div class="other-views btn-group">
+            <a class="btn" href="{% url day_calendar calendar.slug %}{% querystring_for_date periods.month.start 3 %}">Day</a>
+            <a class="btn" href="{% url week_calendar calendar.slug %}{% querystring_for_date periods.month.start 3 %}">Week</a>
+            <a class="btn" href="{% url month_calendar calendar.slug %}{% querystring_for_date periods.month.start 2 %}">Month</a>
             <a class="btn" href="{% url tri_month_calendar calendar.slug %}{% querystring_for_date periods.month.start 2 %}">3 Month</a>
             <a class="btn" href="{% url year_calendar calendar.slug %}{% querystring_for_date periods.month.start 1%}">Year</a>
         </div>
     </div>
 </nav>
-
-
 
 <div class="table-wrap">
 

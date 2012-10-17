@@ -1,6 +1,7 @@
 /* DAILY VIEW
 ---------------------------------------- */
-#day-wrap .time {
+#day-wrap .time,
+#week-wrap .time {
     display: inline-block;
     position: relative;
     top: 2px;
@@ -31,7 +32,7 @@ div.slot {
     left: 0px;
     border-bottom: 1px dotted #ddd;
 }
-div.slot_column div.slot:last-child {
+div.slot_column div.slot: last-child {
     border-bottom: none;
 }
 div.occ_column {
@@ -60,10 +61,10 @@ a.edit-link {
     width: 14px;
     height: 14px;
 }
-div.occ:hover {
+div.occ: hover {
     background-color: #e5e5e5;
 }
-div.occ a:hover {
+div.occ a: hover {
     background-color: #ccc;
 }
 div.occ span.actions {
@@ -77,59 +78,59 @@ div.occ span.actions span.edit {
     height: 14px;
     display: block;
     float: left;
-    padding-right:3px;
+    padding-right: 3px;
 }
 
 div.occ_column div.cancelled {
     background-color:#FFF;
-    border:1px solid black;
-    color:gray;
+    border: 1px solid black;
+    color: gray;
 }
 div.occ_column div.cancelled .actions {
-    display:none;
+    display: none;
 }
 td.daynumber div.daycell .cancelled {
-    background-color:inherit;
-    color:gray;
+    background-color: inherit;
+    color: gray;
 }
 td.daynumber div.daycell .eventcell0 {
-    border-right:none;
+    border-right: none;
     margin-right:-1px;
 }
 td.daynumber div.daycell .eventcell2 {
-    border-right:none;
+    border-right: none;
     margin-right:-1px;
-    border-left:none;
+    border-left: none;
     margin-left:-1px;
 }
 td.daynumber div.daycell .eventcell3 {
-    border-left:none;
+    border-left: none;
     margin-left:-1px;
 }
 div.type0 {
-    border-bottom:4px dotted gray;
+    border-bottom: 4px dotted gray;
 }
 div.type3 {
-    border-top:4px dotted gray;
+    border-top: 4px dotted gray;
 }
 div.type2 {
-    border-top:4px dotted gray;
-    border-bottom:4px dotted gray;
+    border-top: 4px dotted gray;
+    border-bottom: 4px dotted gray;
 }
 
 
 /* EVENT DETAIL DIALOG
 ---------------------------------------- */
-div.detail tr {vertical-align:top;}
+div.detail tr {vertical-align: top;}
 
-div.detail td.left {font-weight:bold;}
+div.detail td.left {font-weight: bold;}
 
 div.event_options div.title {
-    float:left;
+    float: left;
 }
 
 div.event_options div.buttons {
-    float:right;
+    float: right;
 }
 
 
@@ -174,7 +175,7 @@ table.calendar {
     text-align: center
 }
 table.calendar td {
-    text-align:left;
+    text-align: left;
     margin: 2px;
     padding: 1px;
 }
@@ -184,10 +185,10 @@ table.calendar td.daynumber {
     border-top: 1px solid #eee;
     border-left: 1px solid #eee;
 }
-table.calendar td.daynumber:last-child {
+table.calendar td.daynumber: last-child {
     border-right: 1px solid #eee;
 }
-table.calendar tr:last-child td.daynumber {
+table.calendar tr: last-child td.daynumber {
     border-bottom: 1px solid #eee;
 }
 table.calendar td.noday {
@@ -211,19 +212,19 @@ table.calendar td.small {
     text-align: center
 }
 td.daynumber {
-    height:50px;
+    height: 50px;
 }
 td.daynumber div.header {
-    margin-bottom:2px;
-    padding-bottom:1px;
-    padding-top:1px;
-    text-align:right;
+    margin-bottom: 2px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    text-align: right;
 }
 td.daynumber div.header a {
-    padding:1px 5px 1px 90px;
+    padding: 1px 5px 1px 90px;
 }
 td.small div.header a {
-    padding:0;
+    padding: 0;
 }
 td.daynumber div.eventcell {
     background: #eee;
@@ -234,8 +235,8 @@ td.daynumber div.eventcell {
     overflow: auto;
 }
 td.daynumber div.starttime {
-    float:left;
-    width:40px;
+    float: left;
+    width: 40px;
 }
 td.daynumber div.eventdesc {
     float: left;
@@ -248,41 +249,50 @@ td.daynumber div.eventdesc {
 
 /* WEEK VIEW
 ---------------------------------------- */
-div#week {
-    margin-top:10px;
-    overflow:auto;
-    position:relative;
+div#week-wrap {
+    margin-top: 10px;
+    overflow: auto;
+    position: relative;
 }
-div#week div.weekdayheader {
-    background:#D0D0D0 none repeat scroll 0 0;
-    border:1px solid black;
-    display:block;
-    display:block;
-    font-size:14px;
-    font-weight:bold;
-    padding-left:5px;
+div#week-wrap div.weekdayheader {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
 }
-div#week div.weekdaytable {
-    position:relative;
+div#week-wrap div.weekdaytable {
+    position: relative;
 }
-div#week div.weekday {
-    float:left;
-    width:150px;
+div#week-wrap div.weekday {
+    float: left;
+    width: 156px;
 }
-div#week div.weekday1 {
-    width:230px;
+div#week-wrap div.weekday1 {
+    width: 233px;
 }
-div#week div.slot {
-    font-size:14px;
+div#week-wrap div.slot {
+    font-size: 14px;
 }
-div.weekday span.time {
-    display:none;
+div#week-wrap div.weekday span.time {
+    display: none;
 }
-div.weekday1 span.time {
-    display:inline;
+div#week-wrap div.weekday1 span.time {
+    display: inline-block;
 }
-#week div.occ span.title {
-    font-size:12px;
+div#week-wrap div.weekday span.add-link {
+    display: inline-block;
+    padding: 3px 4px;
+}
+div#week-wrap div.weekday1 span.add-link {
+    display: inline-block;
+}
+div#week-wrap .time {
+    top: 0px;
+}
+#week-wrap div.occ span.title {
+    font-size: 12px;
+}
+div#week-wrap  div.weekday div.occ {
+    width: 133px !important;
 }
 
 
@@ -291,14 +301,14 @@ div.weekday1 span.time {
 div.time-picker {
     position: absolute;
     height: 200px;
-    width:80px; /* needed for IE */
+    width: 80px; /* needed for IE */
     overflow: auto;
     background: #fff;
     border: 1px solid #000;
     z-index: 99;
 }
 div.time-picker-12hours {
-    width:6em; /* needed for IE */
+    width: 6em; /* needed for IE */
 }
 div.time-picker ul {
     list-style-type: none;
@@ -313,47 +323,47 @@ div.time-picker li.selected {
     background: #316AC5;
     color: #fff;
 }
-#id_start_1, #id_end_1 { width:80px;}
+#id_start_1, #id_end_1 { width: 80px;}
 
 
 /* GENERAL SETTINGS
 ---------------------------------------- */
 #demo {
     border-color:#e0e0e0;
-    border-style:solid;
+    border-style: solid;
     border-width: 0 3px 3px 0;
-    float:left;
-    padding-right:5px;
+    float: left;
+    padding-right: 5px;
 }
 body, td {
-    font-family:sans-serif;
+    font-family: sans-serif;
 }
 .error {
-    border:1px solid red;
+    border: 1px solid red;
 }
 #messages {
-    position:absolute;
-    top:50px;
+    position: absolute;
+    top: 50px;
 }
 div.calendarname {
     border-color:#e0e0e0;
-    border-style:solid;
+    border-style: solid;
     border-width: 0 0px 3px 3px;
-    font-weight:bold;
-    padding-left:5px;
-    position:absolute;
-    right:10px;
-    top:10px;
+    font-weight: bold;
+    padding-left: 5px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 div.navigation {
-    text-align:center;
+    text-align: center;
 }
 div.navigation a {
-    padding:0 20px;
+    padding: 0 20px;
 }
 div.tablewrapper {
-    text-align:center;
+    text-align: center;
 }
 #ui-datepicker-div {
-    z-index:10000;
+    z-index: 10000;
 }
