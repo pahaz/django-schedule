@@ -375,7 +375,7 @@ div.tablewrapper {
     width: 689px;
     margin: 40px auto;
 }
-#tri-month-wrap,
+#tri-month-wrap .month,
 #year-wrap .month {
     width: 203px;
     float: left;

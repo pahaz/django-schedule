@@ -31,18 +31,22 @@
 </nav>
 
 <div id="tri-month-wrap" class="clearfix">
+
     <div class="month month1">
         <h3>{{ periods.month.prev_month }} {{ periods.month.prev_month.year }}</h3>
         {% month_table calendar periods.month "small" -1 %}
     </div>
+
     <div class="month month2">
         <h3>{{ periods.month }} {{ periods.month.year }}</h3>
         {% month_table calendar periods.month "small" %}
     </div>
+
     <div class="month month3">
         <h3>{{ periods.month.next_month }} {{ periods.month.next_month.year }}</h3>
         {% month_table calendar periods.month "small" +1 %}
     </div>
+
 </div>
 
 {% endblock %}
