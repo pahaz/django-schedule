@@ -32,7 +32,7 @@ div.slot {
     left: 0px;
     border-bottom: 1px dotted #ddd;
 }
-div.slot_column div.slot: last-child {
+div.slot_column div.slot:last-child {
     border-bottom: none;
 }
 div.occ_column {
@@ -61,10 +61,10 @@ a.edit-link {
     width: 14px;
     height: 14px;
 }
-div.occ: hover {
+div.occ:hover {
     background-color: #e5e5e5;
 }
-div.occ a: hover {
+div.occ a:hover {
     background-color: #ccc;
 }
 div.occ span.actions {
@@ -121,9 +121,9 @@ div.type2 {
 
 /* EVENT DETAIL DIALOG
 ---------------------------------------- */
-div.detail tr {vertical-align: top;}
+div.detail tr { vertical-align: top; }
 
-div.detail td.left {font-weight: bold;}
+div.detail td.left { font-weight: bold; }
 
 div.event_options div.title {
     float: left;
@@ -185,10 +185,10 @@ table.calendar td.daynumber {
     border-top: 1px solid #eee;
     border-left: 1px solid #eee;
 }
-table.calendar td.daynumber: last-child {
+table.calendar td.daynumber:last-child {
     border-right: 1px solid #eee;
 }
-table.calendar tr: last-child td.daynumber {
+table.calendar tr:last-child td.daynumber {
     border-bottom: 1px solid #eee;
 }
 table.calendar td.noday {
@@ -228,7 +228,7 @@ td.small div.header a {
 }
 td.daynumber div.eventcell {
     background: #eee;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     clear: both;
     cursor: pointer;
     margin: 0 1px 3px 1px;
@@ -366,4 +366,29 @@ div.tablewrapper {
 }
 #ui-datepicker-div {
     z-index: 10000;
+}
+
+
+/* 3 MONTH VIEW
+---------------------------------------- */
+#tri-month-wrap {
+    width: 689px;
+    margin: 40px auto;
+}
+#tri-month-wrap .month {
+    width: 203px;
+    float: left;
+    margin-right: 40px;
+}
+#tri-month-wrap .month3 {
+    margin-right: 0px;
+}
+#tri-month-wrap .month h3 {
+    font-size: 1em;
+    line-height: 1em;
+    margin: 0px 0px 10px;
+    text-align: center;
+}
+#tri-month-wrap table td.weeknum {
+    font-size: 0.7em;
 }
