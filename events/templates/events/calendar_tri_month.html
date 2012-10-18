@@ -6,44 +6,22 @@
 
 {% block body %}
 
-<nav class="cal-top-nav clearfix">
-
-    <div class="pull-left">
-
-        <div class="today"><a class="btn" href="{% url tri_month_calendar calendar.slug %}">Today</a></div>
-
-        {% prevnext "tri_month_calendar" calendar.slug periods.month "F Y"%}
-
-        <div class="period-name">{{ periods.month.prev_month }} {{ periods.month.prev_month.year }} - {{ periods.month.next_month }} {{ periods.month.next_month.year }}</div>
-
-    </div>
-
-    <div class="pull-right">
-        <div class="other-views btn-group">
-            <a class="btn" href="{% url day_calendar calendar.slug %}{% querystring_for_date periods.month.start 3 %}">Day</a>
-            <a class="btn" href="{% url week_calendar calendar.slug %}{% querystring_for_date periods.month.start 3 %}">Week</a>
-            <a class="btn" href="{% url month_calendar calendar.slug %}{% querystring_for_date periods.month.start 2 %}">Month</a>
-            <a class="btn" href="{% url tri_month_calendar calendar.slug %}{% querystring_for_date periods.month.start 2 %}">3 Month</a>
-            <a class="btn" href="{% url year_calendar calendar.slug %}{% querystring_for_date periods.month.start 1%}">Year</a>
-        </div>
-    </div>
-
-</nav>
+{% include "events/_cal_nav.html" with period=periods.month today_view_name="tri_month_calendar" %}
 
 <div id="tri-month-wrap" class="small-cal clearfix">
 
     <div class="month month1">
-        <h3>{{ periods.month.prev_month }} {{ periods.month.prev_month.year }}</h3>
+        <h3>{{ periods.month.prev_month }}</h3>
         {% month_table calendar periods.month "small" -1 %}
     </div>
 
     <div class="month month2">
-        <h3>{{ periods.month }} {{ periods.month.year }}</h3>
+        <h3>{{ periods.month }}</h3>
         {% month_table calendar periods.month "small" %}
     </div>
 
     <div class="month month3">
-        <h3>{{ periods.month.next_month }} {{ periods.month.next_month.year }}</h3>
+        <h3>{{ periods.month.next_month }}</h3>
         {% month_table calendar periods.month "small" +1 %}
     </div>
 

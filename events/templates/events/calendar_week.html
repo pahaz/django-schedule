@@ -8,29 +8,7 @@
 
 {% include "events/_dialogs.html" %}
 
-<nav class="cal-top-nav clearfix">
-
-    <div class="pull-left">
-
-        <div class="today"><a class="btn" href="{% url week_calendar calendar.slug %}">Today</a></div>
-
-        {% prevnext "week_calendar" calendar.slug periods.week "\Week W, M Y"%}
-
-        <div class="period-name">{{ periods.week }}</div>
-
-    </div>
-
-    <div class="pull-right">
-        <div class="other-views btn-group">
-            <a class="btn" href="{% url day_calendar calendar.slug %}{% querystring_for_date periods.week.start 3 %}">Day</a>
-            <a class="btn" href="{% url week_calendar calendar.slug %}{% querystring_for_date periods.week.start 3 %}">Week</a>
-            <a class="btn" href="{% url month_calendar calendar.slug %}{% querystring_for_date periods.week.start 2 %}">Month</a>
-            <a class="btn" href="{% url tri_month_calendar calendar.slug %}{% querystring_for_date periods.week.start 2 %}">3 Month</a>
-            <a class="btn" href="{% url year_calendar calendar.slug %}{% querystring_for_date periods.week.start 1%}">Year</a>
-        </div>
-    </div>
-
-</nav>
+{% include "events/_cal_nav.html" with period=periods.week today_view_name="week_calendar" %}
 
 <div id="week-wrap">
     {% for day in periods.week.get_days %}

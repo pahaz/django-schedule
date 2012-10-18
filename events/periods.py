@@ -208,7 +208,7 @@ class Month(Period):
         return start, end
 
     def __unicode__(self):
-        return self.name()
+        return "%s %s" % (self.name(), self.year())
 
     def name(self):
         return self.start.strftime('%B')
