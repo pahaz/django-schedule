@@ -34,9 +34,9 @@
 
 <div id="week-wrap">
     {% for day in periods.week.get_days %}
-        <div class="weekday weekday{{forloop.counter}}">
+        <div class="weekday weekday{{ forloop.counter }}">
             <div class="weekdayheader">
-                <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start %}">{{day.start|date:"l, d"}}</a>
+                <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a>
             </div>
             <div class="weekdaytable">
                 {% if forloop.first %}

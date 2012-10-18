@@ -10,7 +10,7 @@
     {% for week in month.get_weeks %}
     <tr>
         <td class="weeknum">
-            <a href="{% url week_calendar calendar.slug %}{% querystring_for_date week.start %}">{{week.start|date:"W"}}</a>
+            <a href="{% url week_calendar calendar.slug %}{% querystring_for_date week.start %}">{{ week.start|date:"W" }}</a>
         </td>
 
         {% for day in week.get_days %}
