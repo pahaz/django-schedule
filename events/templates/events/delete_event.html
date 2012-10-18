@@ -3,13 +3,19 @@
 
 {% block body %}
 <h1>{% trans "Delete" %}</h1>
-{% trans "Are you sure that you really want to delete it?" %}
 
-<form action="." method="POST">
-    {{ object }} <br/>
-    <input type="submit" value="{% trans "Delete" %}" />
-    <input type="button" value="{% trans "Cancel" %}" onclick="window.location='{{next}}'"/>
+<p>{% trans "Are you sure that you really want to delete it?" %}</p>
 
-    <input type="hidden" name="next" value="{{next|default:""}}"/>
+<form action="." method="POST" class="form-horizontal">
+
+    <p>{{ object }}</p>
+
+    <div class="form-actions">
+        <button class="btn" onclick="window.location='{{ next }}'; return false;">{% trans "Cancel" %}</button>
+        <button class="btn btn-primary" type="submit">{% trans "Delete" %}</button>
+        <input type="hidden" name="next" value="{{ next|default:"" }}">
+        {% csrf_token %}
+    </div>
+
 </form>
 {% endblock %}

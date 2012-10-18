@@ -323,7 +323,13 @@ div.time-picker li.selected {
     background: #316AC5;
     color: #fff;
 }
-#id_start_1, #id_end_1 { width: 80px;}
+form .hasDatepicker {
+    width: 80px;
+    margin-right: 10px;
+}
+#id_start_1, #id_end_1 {
+    width: 68px;
+}
 
 
 /* GENERAL SETTINGS
@@ -337,9 +343,6 @@ div.time-picker li.selected {
 }
 body, td {
     font-family: sans-serif;
-}
-.error {
-    border: 1px solid red;
 }
 #messages {
     position: absolute;

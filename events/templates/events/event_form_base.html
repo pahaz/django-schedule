@@ -1,6 +1,8 @@
 {% extends "events/base.html" %}
 
-{% block extra_head %}
+{% load bootstrap %}
+
+{% block bottom_script %}
     {{ block.super }}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.timePicker.js"></script>
     <script type="text/javascript">
@@ -12,26 +14,42 @@
         $("#id_end_recurring_period").datepicker({dateFormat: $.datepicker.ATOM});
         var oldTime = $.timePicker("#id_start_1").getTime();
         $("#id_start_1").change(function() {
-          if ($("#id_end_1").val()) { // Only update when second input has a value.
-          // Calculate duration.
-          var duration = ($.timePicker("#id_end_1").getTime() - oldTime);
-          var time = $.timePicker("#id_start_1").getTime();
-          // Calculate and update the time in the second input.
-          $.timePicker("#id_end_1").setTime(new Date(new Date(time.getTime() + duration)));
-          oldTime = time;
-          }
+            if ($("#id_end_1").val()) { // Only update when second input has a value.
+                // Calculate duration.
+                var duration = ($.timePicker("#id_end_1").getTime() - oldTime);
+                var time = $.timePicker("#id_start_1").getTime();
+                // Calculate and update the time in the second input.
+                $.timePicker("#id_end_1").setTime(new Date(new Date(time.getTime() + duration)));
+                oldTime = time;
+            }
         });
+
         // Validate.
         // TODO this should validate date AND time
         $("#id_end_1").change(function() {
-          if($.timePicker("#id_start_1").getTime() > $.timePicker(this).getTime()) {
-          $(this).addClass("error");
-          }
-          else {
-          $(this).removeClass("error");
-          }
+            if($.timePicker("#id_start_1").getTime() > $.timePicker(this).getTime()) {
+                $(this).addClass("error");
+            }
+            else {
+                $(this).removeClass("error");
+            }
         });
+
     });
     </script>
+{% endblock %}
+
+{% block body %}
+<form action="." method="post" class="form-horizontal">{% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <div class="form-actions">
+        <button class="btn" onclick="window.location='{{ next }}'; return false;">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <input type="hidden" name="next" value="{{ next|default:"" }}">
+    </div>
+
+</form>
 {% endblock %}
 
