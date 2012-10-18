@@ -21,6 +21,10 @@
     position: relative;
     left: 0px;
 }
+#day-wrap #am-col.today,
+#day-wrap #pm-col.today {
+    background-color: #eee;
+}
 div.slot_column {
     top: 0px;
     left: 0px;
@@ -166,10 +170,6 @@ table.calendar {
 .table-wrap table.calendar td.daynumber {
     height: 125px;
 }
-/*.dateheader {
-    height: 30px;
-    text-align: center
-}*/
 .daysofweek {
     height: 20px;
     text-align: center
@@ -200,11 +200,15 @@ table.calendar td.free {
 table.calendar td.busy {
     background-color: #fff;
 }
-.compact-month-wrap table.calendar td.free .header a {
-    color: #999;
+table.calendar td.today {
+    background-color: #EAEAEA;
+    border: 1px solid #666;
 }
-.compact-month-wrap table.calendar td.busy .header a {
-    background-color: #fff;
+.small-cal table.calendar td.free .header a,
+.small-cal table.calendar td.free .header a:visited,
+.small-cal table.calendar td.free .header a b {
+    color: #999;
+    font-weight: normal;
 }
 table.calendar td.small {
     width: 28px;
@@ -228,7 +232,6 @@ td.small div.header a {
 }
 td.daynumber div.eventcell {
     background: #eee;
-    /*border: 1px solid #ddd;*/
     clear: both;
     cursor: pointer;
     margin: 0 1px 3px 1px;
@@ -240,10 +243,6 @@ td.daynumber div.starttime {
 }
 td.daynumber div.eventdesc {
     float: left;
-    /*height: 1em;
-    overflow: hidden;
-    width: 75px;
-    line-height: 20px;*/
 }
 
 
@@ -265,6 +264,9 @@ div#week-wrap div.weekdaytable {
 div#week-wrap div.weekday {
     float: left;
     width: 156px;
+}
+div#week-wrap div.weekday.today {
+    background-color: #eee;
 }
 div#week-wrap div.weekday1 {
     width: 233px;

@@ -287,6 +287,12 @@ class Day(Period):
         end = start + datetime.timedelta(days=1)
         return start, end
 
+    def is_today(self):
+        if self.start.date() == datetime.date.today():
+            return True
+        else:
+            return False
+
     def __unicode__(self):
         return date(self.start, "l, %s" % settings.DATE_FORMAT)
 

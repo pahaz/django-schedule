@@ -1,22 +1,23 @@
 {% load events %}
+
 {% ifnotequal day.start.month month.start.month %}
-  <td class="{{size}} daynumber noday"></td>
+  <td class="{{ size }} daynumber noday"></td>
 {% else %}
   {% if day.has_occurrences %}
-    <td class="{{size}} daynumber busy">
+    <td class="{{ size }} daynumber busy{% if day.is_today %} today{% endif %}">
   {% else %}
-    <td class="{{size}} daynumber free">
+    <td class="{{ size }} daynumber free{% if day.is_today %} today{% endif %}">
 {% endif %}
     <div class="header">
         <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start 3 %}">
-            <b>{{day.start.day}}</b>
+            <b>{{ day.start.day }}</b>
         </a>
     </div>
     {% ifnotequal size "small" %}
         <div class="daycell">
             {% if day.has_occurrences %}
                 {% for o in day.get_occurrence_partials %}
-                        <div class="eventcell eventcell{{o.class}}{% if o.occurrence.cancelled %} cancelled{% endif %}" 
+                        <div class="eventcell eventcell{{ o.class }}{% if o.occurrence.cancelled %} cancelled{% endif %}"
                             href="#{% hash_occurrence o.occurrence %}" onclick="openDetail(this);">
                             <div class="starttime">
                                 {% ifequal o.class 0 %}{{ o.occurrence.start|time:"G:i" }}{% endifequal %}

@@ -34,18 +34,18 @@
 
 <div id="week-wrap">
     {% for day in periods.week.get_days %}
-        <div class="weekday weekday{{ forloop.counter }}">
-            <div class="weekdayheader">
-                <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a>
-            </div>
-            <div class="weekdaytable">
-                {% if forloop.first %}
-                {% daily_table day 232 80 600 9 21 %}
-                {% else %}
-                {% daily_table day 155 21 600 9 21 %}
-                {% endif %}
-            </div>
+    <div class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">
+        <div class="weekdayheader">
+            <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a>
         </div>
+        <div class="weekdaytable">
+            {% if forloop.first %}
+            {% daily_table day 232 80 600 9 21 %}
+            {% else %}
+            {% daily_table day 155 21 600 9 21 %}
+            {% endif %}
+        </div>
+    </div>
     {% endfor %}
 </div>
 
