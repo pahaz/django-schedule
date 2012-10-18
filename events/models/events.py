@@ -2,6 +2,7 @@
 from django.contrib.contenttypes import generic
 from django.db import models
 from django.db.models import Q
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
@@ -42,8 +43,8 @@ class Event(models.Model):
         app_label = 'events'
 
     def __unicode__(self):
-        date_format = u'l, %s' % ugettext("DATE_FORMAT")
-        return ugettext('%(title)s: %(start)s-%(end)s') % {
+        date_format = u'l, %s' % settings.DATE_FORMAT
+        return ugettext('%(title)s: %(start)s - %(end)s') % {
             'title': self.title,
             'start': date(self.start, date_format),
             'end': date(self.end, date_format),
