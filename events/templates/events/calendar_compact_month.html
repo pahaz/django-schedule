@@ -6,26 +6,7 @@
 
 {% block base_content %}
 
-<nav class="cal-top-nav clearfix">
-
-    <div class="pull-left">
-
-        <div class="today"><a class="btn" href="{% url compact_calendar calendar.slug %}">Today</a></div>
-
-        {% prevnext "compact_calendar" calendar.slug periods.month "F Y"%}
-
-        <div class="period-name">{{ periods.month }} {{ periods.month.year }}</div>
-
-    </div>
-
-    <div class="pull-right">
-        <div class="other-views btn-group">
-            <a class="btn" href="{% url tri_month_calendar calendar.slug %}{% querystring_for_date periods.month.start 2 %}">3 Month</a>
-            <a class="btn" href="{% url year_calendar calendar.slug %}{% querystring_for_date periods.month.start 1%}">Year</a>
-        </div>
-    </div>
-
-</nav>
+{% include "events/_cal_nav.html" with period=periods.month today_view_name="compact_calendar" %}
 
 <div class="compact-month-wrap">
     {% month_table calendar periods.month "small" %}
