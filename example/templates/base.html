@@ -46,6 +46,29 @@
                         <span class="icon-bar"></span>
                     </a>
                     <a class="brand" href="/">{{ site_name }}</a>
+                    <div id="signin-wrap" class="btn-group pull-right">
+                        {% if not user.is_authenticated %}
+                        <a class="btn" href="{% url signin %}">
+                            <i class="icon-user"></i> Sign in
+                        </a>
+                        {% else %}
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon-user"></i> {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_staff %}<li><a href="{% url admin:index %}"><i class="icon-cog"></i> Admin</a></li>
+                            <li class="divider"></li>{% endif %}
+                            {% url admin:logout as logout_url %}
+                            {% if logout_url %}
+                                <li><a href="{% url signout %}">
+                            {% else %}
+                                <li><a href="{% url signout %}">
+                            {% endif %}
+                            Sign out</a></li>
+                        </ul>
+                        {% endif %}
+                    </div>
+
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="{% url events %}">Calendars</a></li>

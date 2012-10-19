@@ -153,3 +153,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 FIRST_DAY_OF_WEEK = 1  # Monday
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/signin/'
