@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load events %}
 
-{% block body %}
+{% block base_content %}
 <div class="navigation">
   <a href="{% url day_calendar occurrence.event.calendar.slug %}{% querystring_for_date occurrence.start 3 %}">
     Day

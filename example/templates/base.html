@@ -84,16 +84,17 @@
 
         <div class="container">
 
-                <div id="body">
+            {% include "messages.html" %}
 
-                    {% include "messages.html" %}
+            {% block base_content %}
+            {% endblock base_content %}
 
-                    {% block body %}
-                    {% endblock %}
-
-                </div>
-
-                <div id="footer">{% block footer %}{% endblock %}</div>
+            {% block base_footer %}
+            <hr>
+            <footer>
+                <p>&copy; {{ site_name }} {% now "Y" %}</p>
+            </footer>
+            {% endblock base_footer %}
 
         </div> <!-- /container -->
 

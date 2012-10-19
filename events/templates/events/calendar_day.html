@@ -4,7 +4,7 @@
 
 {% block title %}{{ calendar.name }} ({{ periods.day }}){% endblock title %}
 
-{% block body %}
+{% block base_content %}
 
 {% include "events/_cal_nav.html" with period=periods.day today_view_name="day_calendar" %}
 

@@ -39,7 +39,7 @@
     </script>
 {% endblock %}
 
-{% block body %}
+{% block base_content %}
 <form action="." method="post" class="form-horizontal">{% csrf_token %}
 
     {{ form|bootstrap }}

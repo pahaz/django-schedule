@@ -4,7 +4,7 @@
 
 {% block title %}{{ calendar.name }} ({{ periods.month.prev_month }} {{ periods.month.prev_month.year }} - {{ periods.month.next_month }} {{ periods.month.next_month.year }}){% endblock title %}
 
-{% block body %}
+{% block base_content %}
 
 {% include "events/_cal_nav.html" with period=periods.month today_view_name="tri_month_calendar" %}
 
