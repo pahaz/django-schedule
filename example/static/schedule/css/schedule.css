@@ -237,6 +237,9 @@ td.daynumber div.eventcell {
     margin: 0 1px 3px 1px;
     overflow: auto;
 }
+td.daynumber.today div.eventcell {
+    background: #d1d1d1;
+}
 td.daynumber div.starttime {
     float: left;
     width: 40px;
