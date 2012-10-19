@@ -23,5 +23,5 @@ The following quick install steps make the following assumptions about you:
     $ echo "export DJANGO_SETTINGS_MODULE=config.settings.development" >> $VIRTUAL_ENV/bin/postactivate
     $ workon django-schedule
     $ django-admin.py syncdb
-    $ django-admin.py load_sample_data
+    $ django-admin.py load_example_data
     $ django-admin.py runserver
