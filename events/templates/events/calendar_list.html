@@ -22,7 +22,7 @@
                 <a class="btn" href="{% url month_calendar cal.slug %}">Month</a>
                 <a class="btn" href="{% url tri_month_calendar cal.slug %}">3 Months</a>
                 <a class="btn" href="{% url year_calendar cal.slug %}">Year</a>
-                <a class="btn" href="/schedule/feed/calendar/upcoming/{{ cal.id }}/">Feed</a>
+                <a class="btn" href="{% url upcoming_events_feed cal.id %}">Atom Feed</a>
             </div>
         </td>
     {% endfor %}

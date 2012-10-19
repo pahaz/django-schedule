@@ -89,7 +89,7 @@ url(r'^occurrence/edit/(?P<event_id>\d+)/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d
     name="edit_occurrence_by_date"),
 
 #feed urls
-url(r'^feed/calendar/(.*)/$', UpcomingEventsFeed()),
+url(r'^feed/calendar/(.*)/$', UpcomingEventsFeed(), name="upcoming_events_feed"),
 
 (r'^ical/calendar/(.*)/$', CalendarICalendar()),
 

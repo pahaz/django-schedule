@@ -159,7 +159,7 @@ class Event(models.Model):
         difference = self.end - self.start
         while True:
             o_start = date_iter.next()
-            if o_start > self.end_recurring_period:
+            if self.end_recurring_period and o_start > self.end_recurring_period:
                 raise StopIteration
             o_end = o_start + difference
             if o_end > after:
