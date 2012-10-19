@@ -3,9 +3,9 @@
 Install
 =======
 
-The following quick install steps make the following assumtions about you:
+The following quick install steps make the following assumptions about you:
 
-- You have working understanding of `Django <https://www.djangoproject.com/>`_
+- You have a working understanding of `Django <https://www.djangoproject.com/>`_
 - You've setup and use `virtualenvwrapper <http://www.doughellmann.com/projects/virtualenvwrapper/>`_
 
 
