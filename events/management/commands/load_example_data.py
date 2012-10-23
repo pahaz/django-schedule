@@ -1,15 +1,22 @@
 from django.core.management.base import NoArgsCommand
+from django.contrib.auth.models import User
+from events.models import Calendar
+from events.models import Event
+from events.models import Rule
 import sys
+import datetime
 
 
 class Command(NoArgsCommand):
     help = "Load some sample data into the db"
 
     def handle_noargs(self, **options):
-        import datetime
-        from events.models import Calendar
-        from events.models import Event
-        from events.models import Rule
+
+        print "Checking for users ..."
+        users = User.objects.all()
+        if not users:
+            print "It doesn't look like you've added any users. To add at least one super user run, django-admin.py createsuperuser"
+            sys.exit(1)
 
         print "Checking for existing data ..."
         try:
@@ -46,6 +53,7 @@ class Command(NoArgsCommand):
         YEARLY_RULE = Rule.objects.get(frequency="YEARLY")
 
         Event.objects.create(**{
+            'creator': users[0],
             'title': 'Exercise',
             'start': datetime.datetime(2008, 11, 3, 9, 0),
             'end': datetime.datetime(2008, 11, 3, 10, 0),
@@ -54,6 +62,7 @@ class Command(NoArgsCommand):
         })
 
         Event.objects.create(**{
+            'creator': users[0],
             'title': 'Exercise',
             'start': datetime.datetime(2008, 11, 5, 15, 0),
             'end': datetime.datetime(2008, 11, 5, 16, 30),
@@ -62,6 +71,7 @@ class Command(NoArgsCommand):
         })
 
         Event.objects.create(**{
+            'creator': users[0],
             'title': 'Exercise',
             'start': datetime.datetime(2008, 11, 7, 9, 0),
             'end': datetime.datetime(2008, 11, 7, 10, 0),
@@ -70,6 +80,7 @@ class Command(NoArgsCommand):
         })
 
         Event.objects.create(**{
+                'creator': users[0],
                 'title': 'Pay Mortgage',
                 'start': datetime.datetime(2008, 11, 1, 14, 0),
                 'end': datetime.datetime(2008, 11, 1, 14, 30),
@@ -78,6 +89,7 @@ class Command(NoArgsCommand):
         })
 
         Event.objects.create(**{
+            'creator': users[0],
             'title': "Rock's Birthday Party",
             'start': datetime.datetime(2008, 12, 11, 19, 0),
             'end': datetime.datetime(2008, 12, 11, 23, 59),
@@ -86,6 +98,7 @@ class Command(NoArgsCommand):
         })
 
         Event.objects.create(**{
+            'creator': users[0],
             'title': 'Christmas Party',
             'start': datetime.datetime(2008, 12, 25, 19, 30),
             'end': datetime.datetime(2008, 12, 25, 23, 59),
