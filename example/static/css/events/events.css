@@ -65,6 +65,9 @@ a.edit-link {
     width: 14px;
     height: 14px;
 }
+#day-wrap .occ {
+    width: 489px !important;
+}
 div.occ:hover {
     background-color: #e5e5e5;
 }
@@ -298,6 +301,9 @@ div#week-wrap .time {
 }
 div#week-wrap  div.weekday div.occ {
     width: 133px !important;
+}
+div#week-wrap  div.weekday1 div.occ {
+    width: 151px !important;
 }
 
 
