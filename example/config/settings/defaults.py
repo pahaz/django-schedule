@@ -98,7 +98,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, "templates"),
 )
 
-INSTALLED_APPS = (
+DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -106,10 +106,19 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.staticfiles',
+)
+
+THIRDPARTY_APPS = (
     'bootstrapform',
     'south',
+)
+
+PROJECT_APPS = (
     'events',
 )
+
+BASE_APPS = DJANGO_APPS + THIRDPARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + PROJECT_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
