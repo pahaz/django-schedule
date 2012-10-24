@@ -42,7 +42,7 @@ def calendar_by_periods(request, calendar_slug, periods=None,
     can designate which date you the periods to be initialized to by passing
     a date in request.GET. See the template tag ``query_string_for_date``
 
-    Context Variables
+    Context Variables:
 
     ``date``
         This was the date that was generated from the query string.
@@ -52,10 +52,12 @@ def calendar_by_periods(request, calendar_slug, periods=None,
         in.  If you passed in Month and Day, then your dictionary would look
         like this
 
-        {
-            'month': <events.periods.Month object>
-            'day':   <events.periods.Day object>
-        }
+        ::
+
+            {
+                'month': <events.periods.Month object>
+                'day':   <events.periods.Day object>
+            }
 
         So in the template to access the Day period in the context you simply
         use ``periods.day``.
