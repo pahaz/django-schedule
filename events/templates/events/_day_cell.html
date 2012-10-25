@@ -17,13 +17,14 @@
         <div class="daycell">
             {% if day.has_occurrences %}
                 {% for o in day.get_occurrence_partials %}
-                        <div class="eventcell eventcell{{ o.class }}{% if o.occurrence.cancelled %} cancelled{% endif %}"
+                        <div class="eventcell eventcell{{ o.class }}{% if o.occurrence.cancelled %} cancelled{% endif %}{% if o.all_day %} all-day{% endif %}"
                             href="#{% hash_occurrence o.occurrence %}" onclick="openDetail(this);">
                             <div class="starttime">
-                                {% ifequal o.class 0 %}{{ o.occurrence.start|time:"G:i" }}{% endifequal %}
-                                {% ifequal o.class 1 %}{{ o.occurrence.start|time:"G:i" }}{% endifequal %}
-                                {% ifequal o.class 2 %}(All day){% endifequal %}
-                                {% ifequal o.class 3 %}Ends at {{ o.occurrence.end|time:"G:i" }}{% endifequal %}
+                                {% if not o.all_day %}
+                                    {% ifequal o.class 0 %}{{ o.occurrence.start|time:"G:i" }}{% endifequal %}
+                                    {% ifequal o.class 1 %}{{ o.occurrence.start|time:"G:i" }}{% endifequal %}
+                                    {% ifequal o.class 3 %}Ends at {{ o.occurrence.end|time:"G:i" }}{% endifequal %}
+                                {% endif %}
                             </div>
                             <div class="eventdesc">
                                 {% title o.occurrence %}

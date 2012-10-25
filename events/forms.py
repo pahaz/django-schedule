@@ -8,10 +8,10 @@ class SpanForm(forms.ModelForm):
     start = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
     end = forms.DateTimeField(widget=forms.SplitDateTimeWidget, help_text=_("The end time must be later than start time."))
 
-    def clean_end(self):
-        if self.cleaned_data['end'] <= self.cleaned_data['start']:
-            raise forms.ValidationError(_("The end time must be later than start time."))
-        return self.cleaned_data['end']
+    def clean(self):
+        if not self.cleaned_data['all_day'] and self.cleaned_data['end'] <= self.cleaned_data['start']:
+            self._errors["end"] = self.error_class(["The end time must be later than start time."])
+        return self.cleaned_data
 
 
 class EventForm(SpanForm):

@@ -53,13 +53,13 @@ class Period(object):
             occurrences += event_occurrences
         return sorted(occurrences)
 
-    def cached_get_sorted_occurrences(self):
+    @property
+    def occurrences(self):
+        """Returns self._occurrences if it's been defined, otherwise it creates and returns self._occurrences"""
         if hasattr(self, '_occurrences'):
             return self._occurrences
-        occs = self._get_sorted_occurrences()
-        self._occurrences = occs
-        return occs
-    occurrences = property(cached_get_sorted_occurrences)
+        self._occurrences = self._get_sorted_occurrences()
+        return self._occurrences
 
     def get_persisted_occurrences(self):
         if hasattr(self, '_persisted_occurrenes'):
@@ -69,25 +69,59 @@ class Period(object):
             return self._persisted_occurrences
 
     def classify_occurrence(self, occurrence):
+        """
+        You use this method to determine how the occurrence relates to the
+        period. This method returns a dictionary. The keys are ``class``,
+        ``occurrence`` and ``all_day``. The ``all_day`` key is a boolean that
+        is ``True`` if the occurrence is an all day event and is ``False`` if
+        the occurrence is not an all day event.  The ``class`` key returns a
+        number from 0 to 3 and the occurrence key returns the occurrence.
+
+        Classes:
+
+            | 0 - Only started during this period.
+            | 1 - Started and ended during this period.
+            | 2 - Didn't start or end in this period, but does exist during this period.
+            | 3 - Only ended during this period.
+        """
+
         if occurrence.cancelled and not SHOW_CANCELLED_OCCURRENCES:
             return
         if occurrence.start > self.end or occurrence.end < self.start:
-            return None
+            return
+
+        all_day = False
         started = False
         ended = False
+        rtn_dict = {
+            'occurrence': occurrence,
+            'class': 2,
+            'all_day': all_day,
+        }
+
+        if occurrence.event.all_day == True:
+            all_day = True
+            rtn_dict.update({'all_day': True})
+
+        # Don't return all day events if the occurrence end datetime is
+        # greater than the day start datetime
+        if all_day and occurrence.end > self.start:
+            return
+
         if occurrence.start >= self.start and occurrence.start < self.end:
             started = True
+
         if occurrence.end >= self.start and occurrence.end < self.end:
             ended = True
+
         if started and ended:
-            return {'occurrence': occurrence, 'class': 1}
+            rtn_dict.update({'class': 1})
         elif started:
-            return {'occurrence': occurrence, 'class': 0}
+            rtn_dict.update({'class': 0})
         elif ended:
-            return {'occurrence': occurrence, 'class': 3}
-        # it existed during this period but it didnt begin or end within it
-        # so it must have just continued
-        return {'occurrence': occurrence, 'class': 2}
+            rtn_dict.update({'class': 3})
+
+        return rtn_dict
 
     def get_occurrence_partials(self):
         occurrence_dicts = []
