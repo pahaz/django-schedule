@@ -117,7 +117,6 @@ class CalendarNode(template.Node):
         self.context_var = context_var
 
     def render(self, context):
-        calendar = Calendar.objects.get_calendar_for_object(self.content_object.resolve(context), self.distinction)
         context[self.context_var] = Calendar.objects.get_calendar_for_object(self.content_object.resolve(context), self.distinction)
         return ''
 
