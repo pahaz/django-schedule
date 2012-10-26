@@ -6,8 +6,7 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.template import RequestContext
 from django.template import Context, loader
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
-from django.utils.decorators import method_decorator
+from django.core.exceptions import ImproperlyConfigured
 from events.conf.settings import GET_EVENTS_FUNC, OCCURRENCE_CANCEL_REDIRECT
 from events.forms import EventForm, OccurrenceForm
 from events.forms import EventBackendForm, OccurrenceBackendForm
@@ -287,18 +286,8 @@ class DeleteEvent(DeleteView):
 
     model = Event
     slug_url_kwarg = 'event_id'
+    slug_field = 'id'
     template_name = "events/delete_event.html"
-
-    def get_object(self, queryset=None):
-
-        queryset = self.get_queryset().filter(pk=self.kwargs['event_id'])
-
-        try:
-            obj = queryset.get()
-        except ObjectDoesNotExist:
-            raise Http404("No %(verbose_name)s found matching the query" % {'verbose_name': queryset.model._meta.verbose_name})
-
-        return obj
 
     def get_success_url(self):
         self.success_url = get_next_url(self.request, reverse('day_calendar', args=[self.object.calendar.slug]))
