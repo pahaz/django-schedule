@@ -141,6 +141,22 @@ div.event_options div.buttons {
 }
 
 
+/* EVENT DETAIL VIEW
+---------------------------------------- */
+#event-detail-wrap .actions {
+    display: none;
+}
+#event-detail-wrap .cal-top-nav:hover .actions {
+    display: inline;
+}
+#event-detail-wrap .actions {
+    margin-left: 10px;
+}
+#event-detail-wrap .actions .edit a {
+    display: inline-block;
+}
+
+
 /* MONTH TOP NAV
 ---------------------------------------- */
 .cal-top-nav {

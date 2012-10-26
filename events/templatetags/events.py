@@ -95,6 +95,22 @@ def options(context, occurrence):
     return context
 
 
+@register.filter
+def can_edit_event(obj, user):
+    """
+    Checks if a user can edit an event.
+
+    Usage::
+
+        {% if event|can_edit_event:request.user %}
+        ....
+        {% endif %}
+
+    """
+
+    return CHECK_PERMISSION_FUNC(obj, user)
+
+
 @register.inclusion_tag("events/_create_event_options.html", takes_context=True)
 def create_event_url(context, calendar, slot):
     context.update({
