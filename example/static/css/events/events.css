@@ -144,16 +144,26 @@ div.event_options div.buttons {
 /* EVENT DETAIL VIEW
 ---------------------------------------- */
 #event-detail-wrap .actions {
-    display: none;
+    opacity: 0;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
 }
 #event-detail-wrap .cal-top-nav:hover .actions {
-    display: inline;
+   opacity: 1;
 }
 #event-detail-wrap .actions {
     margin-left: 10px;
 }
-#event-detail-wrap .actions .edit a {
+#event-detail-wrap .actions a {
     display: inline-block;
+    opacity: 0.4;
+    transition: opacity .15s ease-in-out;
+    -moz-transition: opacity .15s ease-in-out;
+    -webkit-transition: opacity .15s ease-in-out;
+}
+#event-detail-wrap .actions a:hover {
+    opacity: 1;
 }
 
 
