@@ -1,11 +1,13 @@
 from events.utils import serialize_occurrences
 from urllib import quote
 from django.shortcuts import render_to_response, get_object_or_404
-from django.views.generic.create_update import delete_object
+from django.views.generic.edit import DeleteView
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.template import RequestContext
 from django.template import Context, loader
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
+from django.utils.decorators import method_decorator
 from events.conf.settings import GET_EVENTS_FUNC, OCCURRENCE_CANCEL_REDIRECT
 from events.forms import EventForm, OccurrenceForm
 from events.forms import EventBackendForm, OccurrenceBackendForm
@@ -281,27 +283,39 @@ def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
     }, context_instance=RequestContext(request))
 
 
-@check_event_permissions
-def delete_event(request, event_id, next=None, login_required=True):
-    """
-    After the event is deleted there are three options for redirect, tried in
-    this order:
+class DeleteEvent(DeleteView):
 
-    # Try to find a 'next' GET variable
-    # If the key word argument redirect is set
-    # Lastly redirect to the event detail of the recently create event
-    """
-    event = get_object_or_404(Event, id=event_id)
-    next = next or reverse('day_calendar', args=[event.calendar.slug])
-    next = get_next_url(request, next)
-    return delete_object(request,
-                         model=Event,
-                         object_id=event_id,
-                         post_delete_redirect=next,
-                         template_name="events/delete_event.html",
-                         extra_context=dict(next=next),
-                         login_required=login_required
-                        )
+    model = Event
+    slug_url_kwarg = 'event_id'
+    template_name = "events/delete_event.html"
+
+    def get_object(self, queryset=None):
+
+        queryset = self.get_queryset().filter(pk=self.kwargs['event_id'])
+
+        try:
+            obj = queryset.get()
+        except ObjectDoesNotExist:
+            raise Http404("No %(verbose_name)s found matching the query" % {'verbose_name': queryset.model._meta.verbose_name})
+
+        return obj
+
+    def get_success_url(self):
+        self.success_url = get_next_url(self.request, reverse('day_calendar', args=[self.object.calendar.slug]))
+
+        if self.success_url:
+            return self.success_url
+        else:
+            raise ImproperlyConfigured(
+                "No URL to redirect to. Provide a success_url.")
+
+    def get_context_data(self, **kwargs):
+        context = super(DeleteEvent, self).get_context_data(**kwargs)
+        next = get_next_url(self.request, reverse('day_calendar', args=[context['object'].calendar.slug]))
+        context.update({'next': next, 'calendar_id': context['object'].calendar.id})
+        return context
+
+delete_event = check_event_permissions(DeleteEvent.as_view())
 
 
 def check_next_url(next):

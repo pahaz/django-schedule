@@ -1,6 +1,7 @@
 {% extends "events/base.html" %}
 
 {% load events %}
+{% load url from future %}
 
 {% block title %}{{ calendar.name }} ({{ periods.week }}){% endblock title %}
 
@@ -14,7 +15,7 @@
     {% for day in periods.week.get_days %}
     <div class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">
         <div class="weekdayheader">
-            <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a>
+            <a href="{% url 'day_calendar' calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a>
         </div>
         <div class="weekdaytable">
             {% if forloop.first %}

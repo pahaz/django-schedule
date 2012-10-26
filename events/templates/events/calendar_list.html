@@ -1,5 +1,7 @@
 {% extends "events/base.html" %}
 
+{% load url from future %}
+
 {% block title %}Available Calendars{% endblock %}
 
 {% block base_content %}
@@ -16,13 +18,13 @@
         <th>{{ cal }}</th>
         <td>
             <div class="btn-group">
-                <a class="btn" href="{% url day_calendar cal.slug %}">Day</a>
-                <a class="btn" href="{% url week_calendar cal.slug %}">Week</a>
-                <a class="btn" href="{% url compact_calendar cal.slug %}">Small Month</a>
-                <a class="btn" href="{% url month_calendar cal.slug %}">Month</a>
-                <a class="btn" href="{% url tri_month_calendar cal.slug %}">3 Months</a>
-                <a class="btn" href="{% url year_calendar cal.slug %}">Year</a>
-                <a class="btn" href="{% url upcoming_events_feed cal.id %}">Atom Feed</a>
+                <a class="btn" href="{% url 'day_calendar' cal.slug %}">Day</a>
+                <a class="btn" href="{% url 'week_calendar' cal.slug %}">Week</a>
+                <a class="btn" href="{% url 'compact_calendar' cal.slug %}">Small Month</a>
+                <a class="btn" href="{% url 'month_calendar' cal.slug %}">Month</a>
+                <a class="btn" href="{% url 'tri_month_calendar' cal.slug %}">3 Months</a>
+                <a class="btn" href="{% url 'year_calendar' cal.slug %}">Year</a>
+                <a class="btn" href="{% url 'upcoming_events_feed' cal.id %}">Atom Feed</a>
             </div>
         </td>
     {% endfor %}

@@ -1,5 +1,7 @@
 {% load events %}
 
+{% load url from future %}
+
 {% ifnotequal day.start.month month.start.month %}
   <td class="{{ size }} daynumber noday"></td>
 {% else %}
@@ -9,7 +11,7 @@
     <td class="{{ size }} daynumber free{% if day.is_today %} today{% endif %}">
 {% endif %}
     <div class="header">
-        <a href="{% url day_calendar calendar.slug %}{% querystring_for_date day.start 3 %}">
+        <a href="{% url 'day_calendar' calendar.slug %}{% querystring_for_date day.start 3 %}">
             <b>{{ day.start.day }}</b>
         </a>
     </div>

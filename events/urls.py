@@ -1,21 +1,17 @@
 from django.conf.urls.defaults import *
-from django.views.generic.list_detail import object_list
+from django.views.generic import ListView
 from events.models import Calendar
 from events.feeds import UpcomingEventsFeed
 from events.feeds import CalendarICalendar
 from events.periods import Year, Month, Week, Day
 
-info_dict = {
-    'queryset': Calendar.objects.all(),
-}
 
 urlpatterns = patterns('',
 
 # urls for Calendars
 url(r'^calendar/$',
-    object_list,
-    name="events",
-    kwargs={'queryset': Calendar.objects.all(), 'template_name': 'events/calendar_list.html'}),
+    ListView.as_view(queryset=Calendar.objects.all(), template_name='events/calendar_list.html'),
+    name="events"),
 
 url(r'^calendar/year/(?P<calendar_slug>[-\w]+)/$',
     'events.views.calendar_by_periods',
@@ -113,6 +109,6 @@ url(r'^event_json/$',
     'events.views.event_json',
     name="event_json"),
 
- url(r'$', object_list, info_dict, name='events'),
+ url(r'$', ListView.as_view(queryset=Calendar.objects.all()), name='events'),
 
 )
