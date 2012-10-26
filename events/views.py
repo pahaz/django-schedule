@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.template import RequestContext
 from django.template import Context, loader
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ImproperlyConfigured
 from events.conf.settings import GET_EVENTS_FUNC, OCCURRENCE_CANCEL_REDIRECT
 from events.forms import EventForm, OccurrenceForm
 from events.forms import EventBackendForm, OccurrenceBackendForm
@@ -291,16 +290,12 @@ class DeleteEvent(DeleteView):
 
     def get_success_url(self):
         self.success_url = get_next_url(self.request, reverse('day_calendar', args=[self.object.calendar.slug]))
-
-        if self.success_url:
-            return self.success_url
-        else:
-            raise ImproperlyConfigured(
-                "No URL to redirect to. Provide a success_url.")
+        self.success_url = super(DeleteEvent, self).get_success_url()
+        return self.success_url
 
     def get_context_data(self, **kwargs):
         context = super(DeleteEvent, self).get_context_data(**kwargs)
-        next = get_next_url(self.request, reverse('day_calendar', args=[context['object'].calendar.slug]))
+        next = get_next_url(self.request, self.kwargs.get('next', reverse('day_calendar', args=[context['object'].calendar.slug])))
         context.update({'next': next, 'calendar_id': context['object'].calendar.id})
         return context
 
