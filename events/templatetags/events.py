@@ -148,7 +148,6 @@ class CreateCalendarNode(template.Node):
 def do_get_or_create_calendar_for_object(parser, token):
     contents = token.split_contents()
     if len(contents) > 2:
-        tag_name = contents[0]
         obj = contents[1]
         if 'by' in contents:
             by_index = contents.index('by')
