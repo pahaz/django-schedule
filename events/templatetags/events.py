@@ -43,14 +43,16 @@ def day_cell(context,  calendar, day, month, size="regular"):
 @register.inclusion_tag("events/_daily_table.html", takes_context=True)
 def daily_table(context, day, width, width_slot, height, start=8, end=20, increment=30):
     """
-      Display a nice table with occurrences and action buttons.
-      Arguments:
-      width - width of the table (px)
-      width_slot - width of the slot column (px)
-      height - height of the table
-      start - hour at which the day starts
-      end - hour at which the day ends
-      increment - size of a time slot (in minutes)
+    Display a nice table with occurrences and action buttons.
+
+    Arguments::
+
+        width - width of the table (px)
+        width_slot - width of the slot column (px)
+        height - height of the table
+        start - hour at which the day starts
+        end - hour at which the day ends
+        increment - size of a time slot (in minutes)
     """
     user = context['request'].user
     context['addable'] = CHECK_PERMISSION_FUNC(None, user)
@@ -66,6 +68,13 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
     context['width_slot'] = width_slot
     context['width_occ'] = width_occ
     context['height'] = height
+    return context
+
+
+@register.inclusion_tag("events/_all_day_event_list.html", takes_context=True)
+def all_day_events_list(context, day):
+    context['all_day_occurrences'] = day.get_all_day_occurrences()
+    context['can_edit'] = CHECK_PERMISSION_FUNC(None, context['request'].user)
     return context
 
 

@@ -61,6 +61,10 @@ class Period(object):
         self._occurrences = self._get_sorted_occurrences()
         return self._occurrences
 
+    def get_all_day_occurrences(self):
+        occ_list = [o for o in self.occurrences if o.event.all_day == True]
+        return occ_list
+
     def get_persisted_occurrences(self):
         if hasattr(self, '_persisted_occurrenes'):
             return self._persisted_occurrences

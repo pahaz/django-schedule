@@ -12,20 +12,33 @@
 {% include "events/_cal_nav.html" with period=periods.week today_view_name="week_calendar" %}
 
 <div id="week-wrap">
-    {% for day in periods.week.get_days %}
-    <div class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">
-        <div class="weekdayheader">
-            <a href="{% url 'day_calendar' calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a>
-        </div>
-        <div class="weekdaytable">
-            {% if forloop.first %}
-            {% daily_table day 232 80 600 9 21 %}
-            {% else %}
-            {% daily_table day 155 21 600 9 21 %}
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
+
+    <table style="width: 100%;">
+        <tr class="weekdayheader">
+            {% for day in periods.week.get_days %}
+            <th class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}"><a href="{% url 'day_calendar' calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a></th>
+            {% endfor %}
+        </tr>
+        <tr class="all-day-events">
+            {% for day in periods.week.get_days %}
+            <td class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">{% all_day_events_list day %}<div>&nbsp;</div></td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for day in periods.week.get_days %}
+            <td class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">
+                <div class="weekdaytable">
+                {% if forloop.first %}
+                {% daily_table day 257 80 600 9 21 %}
+                {% else %}
+                {% daily_table day 151 21 600 9 21 %}
+                {% endif %}
+                </div>
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+
 </div>
 
 {% endblock %}

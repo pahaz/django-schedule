@@ -1,0 +1,11 @@
+{% load events %}
+
+{% for occ in all_day_occurrences %}
+<div href="#{% hash_occurrence occ %}" class="occ type{{occ.cls}}{% if occ.cancelled %} cancelled{% endif %}" onclick="openDetail(this);">
+    {% options occ %}
+    {% title occ %}
+</div>
+<div id="{% hash_occurrence occ %}" style="display:none;">
+    {% detail occ %}
+</div>
+{% endfor %}
