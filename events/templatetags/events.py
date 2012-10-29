@@ -72,8 +72,8 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
 
 
 @register.inclusion_tag("events/_all_day_event_list.html", takes_context=True)
-def all_day_events_list(context, day):
-    context['all_day_occurrences'] = day.get_all_day_occurrences()
+def all_day_events_list(context, period):
+    context['all_day_occurrences'] = period.get_all_day_occurrences()
     context['can_edit'] = CHECK_PERMISSION_FUNC(None, context['request'].user)
     return context
 

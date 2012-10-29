@@ -51,6 +51,15 @@ class Event(models.Model):
             'end': date(self.end, date_format),
         }
 
+    def save(self, *args, **kwargs):
+
+        # if the event is an all day event then make sure it has the right start and end times
+        if self.all_day == True:
+            self.start = datetime.datetime.combine(self.start, datetime.time.min)
+            self.end = datetime.datetime.combine(self.end, datetime.time.max)
+
+        super(Event, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('event', args=[self.id])
 

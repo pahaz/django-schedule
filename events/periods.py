@@ -62,7 +62,7 @@ class Period(object):
         return self._occurrences
 
     def get_all_day_occurrences(self):
-        occ_list = [o for o in self.occurrences if o.event.all_day == True]
+        occ_list = [o for o in self.occurrences if o.event.all_day == True and o.end < self.end]
         return occ_list
 
     def get_persisted_occurrences(self):
@@ -109,7 +109,7 @@ class Period(object):
 
         # Don't return all day events if the occurrence end datetime is
         # greater than the day start datetime
-        if all_day and occurrence.end > self.start:
+        if all_day and occurrence.end > self.end:
             return
 
         if occurrence.start >= self.start and occurrence.start < self.end:
