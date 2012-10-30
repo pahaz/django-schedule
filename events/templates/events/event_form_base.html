@@ -9,24 +9,24 @@
     $(function() {
 
         function toggle_all_day() {
-            if ($('#id_start_1').val() !== '00:00:00') {
-                init_start_val = $('#id_start_1').val();
-            }
-            if ($('#id_end_1').val() !== '00:00:00') {
-                init_end_val = $('#id_end_1').val();
-            }
             if (typeof(init_start_val) === 'undefined') {
                 init_start_val = '00:00:00'
             }
             if (typeof(init_end_val) === 'undefined') {
-                init_end_val = '00:00:00'
+                init_end_val = '23:59:59'
+            }
+            if ($('#id_start_1').val() !== init_start_val) {
+                init_start_val = $('#id_start_1').val();
+            }
+            if ($('#id_end_1').val() !== init_end_val) {
+                init_end_val = $('#id_end_1').val();
             }
             if ($('#id_all_day').attr('checked') === undefined) {
-                $('#id_end_1').val(init_start_val).show();
-                $('#id_start_1').val(init_end_val).show();
+                $('#id_end_1').val(init_end_val).show();
+                $('#id_start_1').val(init_start_val).show();
             } else {
-                $('#id_end_1').val('00:00:00').hide();
-                $('#id_start_1').val('00:00:00').hide();
+                $('#id_end_1').val(init_end_val).hide();
+                $('#id_start_1').val(init_start_val).hide();
             }
         }
 
