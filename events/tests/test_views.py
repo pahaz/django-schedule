@@ -1,8 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase
 from django.core.urlresolvers import reverse
 from django.test import Client
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 from events.views import check_next_url, coerce_date_dict
 import datetime
+import time
 
 
 class TestViewUtils(TestCase):
@@ -114,3 +117,82 @@ class TestUrls(TestCase):
         self.response = c.get(reverse("delete_event", kwargs={"event_id": 1}), {})
         self.assertEqual(self.response.status_code, 404)
         c.logout()
+
+
+class MySeleniumTests(LiveServerTestCase):
+    """
+    In order to run tests you'll need to download and install the Selenium
+    Chrome driver from http://code.google.com/p/selenium/downloads/list. Just
+    download and extra that driver and make sure it's in your path. I put mine
+    in /usr/localbin.
+    """
+
+    fixtures = ['events.json']
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = WebDriver()
+        super(MySeleniumTests, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(MySeleniumTests, cls).tearDownClass()
+
+    def test_invalid_login(self):
+
+        self.selenium.get('%s%s' % (self.live_server_url, '/accounts/signin/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys('foo')
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys('foo')
+        self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
+
+        # Wait until the response is received
+        WebDriverWait(self.selenium, 2).until(lambda driver: driver.find_element_by_tag_name('body'))
+        self.assertTrue(self.selenium.find_element_by_xpath('//div[contains(@class, "alert-error")]/strong').text.startswith("Your username and password didn't match. Please try again."))
+
+    def test_valid_login(self):
+
+        self.selenium.get('%s%s' % (self.live_server_url, '/accounts/signin/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys('admin')
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys('admin')
+        self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
+
+        # Wait until the response is received
+        WebDriverWait(self.selenium, 2).until(lambda driver: driver.find_element_by_tag_name('body'))
+        self.assertTrue(self.selenium.find_element_by_xpath('//div[@class="container"]/div[@class="hero-unit"]/p').text.startswith("Welcome to Django-schedule's"))
+
+    def test_creating_all_day_event(self):
+
+        # login first
+        self.selenium.get('%s%s' % (self.live_server_url, '/accounts/signin/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys('admin')
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys('admin')
+        self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
+
+        # Wait until the response is received
+        WebDriverWait(self.selenium, 2).until(lambda driver: driver.find_element_by_tag_name('body'))
+
+        self.selenium.get('%s%s' % (self.live_server_url, reverse("calendar_create_event", kwargs={"calendar_slug": 'example'})))
+        self.selenium.find_element_by_id('id_start_0').click()
+        self.selenium.find_element_by_xpath('//td[contains(@class, "ui-datepicker-today")]/a').click()
+        time.sleep(0.1)
+        self.selenium.find_element_by_id('id_end_0').click()
+        self.selenium.find_element_by_xpath('//td[contains(@class, "ui-datepicker-today")]/a').click()
+        time.sleep(0.1)
+        self.selenium.find_element_by_id('id_all_day').click()
+        username_input = self.selenium.find_element_by_name("title")
+        username_input.send_keys('Example All Day Event')
+
+        # self.selenium.find_element_by_id('id_rule').click()
+        self.selenium.find_element_by_xpath('//select[@name="rule"]/option[3]').click()
+        self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
+
+        # Wait until the response is received
+        WebDriverWait(self.selenium, 2).until(lambda driver: driver.find_element_by_tag_name('body'))
+        self.assertEqual(self.selenium.find_element_by_xpath('//div[@id="event-detail-wrap"]//div[@class="period-name"]/strong').text, 'Example All Day Event')
