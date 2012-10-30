@@ -41,7 +41,7 @@ def day_cell(context,  calendar, day, month, size="regular"):
 
 
 @register.inclusion_tag("events/_daily_table.html", takes_context=True)
-def daily_table(context, day, width, width_slot, height, start=8, end=20, increment=30):
+def daily_table(context, day, width, width_slot, height, start=8, end=20, increment=30, include_all_day=False):
     """
     Display a nice table with occurrences and action buttons.
 
@@ -53,12 +53,18 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
         start - hour at which the day starts
         end - hour at which the day ends
         increment - size of a time slot (in minutes)
+        include_all_day - if ``True`` all day events will be include, if ``False`` all day events are excluded
     """
     user = context['request'].user
     context['addable'] = CHECK_PERMISSION_FUNC(None, user)
     width_occ = width - width_slot
     day_part = day.get_time_slot(day.start + datetime.timedelta(hours=start), day.start + datetime.timedelta(hours=end))
     occurrences = day_part.get_occurrences()
+
+    # if include_all_day is False then remove all day events
+    if not include_all_day:
+        occurrences = [o for o in occurrences if o.event.all_day != True]
+
     occurrences = _cook_occurrences(day_part, occurrences, width_occ, height)
     # get slots to display on the left
     slots = _cook_slots(day_part, increment, width, height)

@@ -25,6 +25,9 @@
 #day-wrap #pm-col.today {
     background-color: #eee;
 }
+#day-wrap .all-day-events .occ {
+    width: 571px !important;
+}
 div.slot_column {
     top: 0px;
     left: 0px;
