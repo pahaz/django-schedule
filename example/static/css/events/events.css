@@ -223,6 +223,9 @@ table.calendar td.daynumber:last-child {
 table.calendar tr:last-child td.daynumber {
     border-bottom: 1px solid #eee;
 }
+table.calendar tr:last-child td.today.daynumber {
+    border-bottom: 1px solid #666;
+}
 table.calendar td.noday {
     background-color: #f6f6f6;
 }
