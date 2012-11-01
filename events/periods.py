@@ -48,6 +48,9 @@ class Period(object):
                 if occurrence.start <= self.end and occurrence.end >= self.start:
                     occurrences.append(occurrence)
             return occurrences
+
+        if hasattr(self.events, 'prefetch_related'):
+            self.events = self.events.prefetch_related('rule')
         for event in self.events:
             event_occurrences = event.get_occurrences(self.start, self.end)
             occurrences += event_occurrences
