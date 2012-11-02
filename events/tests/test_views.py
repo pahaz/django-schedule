@@ -4,6 +4,7 @@ from django.test import Client
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from events.views import check_next_url, coerce_date_dict
+from events.models import Event, Occurrence
 import datetime
 import time
 
@@ -117,6 +118,50 @@ class TestUrls(TestCase):
         self.response = c.get(reverse("delete_event", kwargs={"event_id": 1}), {})
         self.assertEqual(self.response.status_code, 404)
         c.logout()
+
+    def test_adding_events(self):
+        c.login(username="admin", password="admin")
+
+        # test adding an all day weekly repeating event
+        old_count = Event.objects.all().count()
+        now = datetime.datetime.now()
+        now_date_str = now.strftime('%Y-%m-%d')
+        self.response = c.post(reverse("calendar_create_event", args=['example']), {
+            'start_0': now_date_str,
+            'start_1': '',
+            'end_0': now_date_str,
+            'end_1': '',
+            'all_day': 'Checked',
+            'title': 'Test All Day Event',
+            'rule': 3,
+        })
+        self.assertTrue(old_count < Event.objects.all().count())
+        self.assertEqual(self.response.status_code, 302)
+
+        # test adding an persistent occurrence
+        old_occ_count = Occurrence.objects.all().count()
+        all_day_event = Event.objects.filter(title="Test All Day Event").get()
+        occurrences = all_day_event.get_occurrences(all_day_event.start + datetime.timedelta(weeks=2), all_day_event.start + datetime.timedelta(weeks=10))
+        occ = occurrences[0]
+        occ_date_str = occ.start.strftime('%Y-%m-%d')
+        post_data = {
+            'title': "Test All Day Event (Single Persisted)",
+            'start_0': occ_date_str,
+            'start_1': '9:00:00',
+            'end_0': occ_date_str,
+            'end_1': '10:00:00',
+        }
+        self.response = c.post(reverse('edit_occurrence_by_date', kwargs={
+                'event_id': occ.event.id,
+                'year': occ.start.year,
+                'month': occ.start.month,
+                'day': occ.start.day,
+                'hour': occ.start.hour,
+                'minute': occ.start.minute,
+                'second': occ.start.second,
+            }), post_data)
+        self.assertEqual(self.response.status_code, 302)
+        self.assertTrue(old_occ_count < Occurrence.objects.all().count())
 
 
 class MySeleniumTests(LiveServerTestCase):
