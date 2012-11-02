@@ -161,7 +161,29 @@ class TestUrls(TestCase):
                 'second': occ.start.second,
             }), post_data)
         self.assertEqual(self.response.status_code, 302)
+        self.assertRedirects(self.response, 'http://testserver%s' % reverse('occurrence', args=[occ.event.pk, 1]))
         self.assertTrue(old_occ_count < Occurrence.objects.all().count())
+
+    def test_deleting_occurrence(self):
+        c.login(username="admin", password="admin")
+
+        e_obj = Event.objects.filter(rule=3)[0]
+        occ_data = {
+            'event': e_obj,
+            'title': '%s (single occurrence)',
+            'start': e_obj.start + datetime.timedelta(days=1),
+            'end': e_obj.end + datetime.timedelta(days=1),
+            'original_start': e_obj.start,
+            'original_end': e_obj.end,
+        }
+        occ = Occurrence.objects.create(**occ_data)
+        del_url = occ.get_cancel_url()
+        self.response = c.post(del_url, {'submit': 'Delete'})
+
+        # get the occurrence again to see if the cancelled field was changed to true
+        occ = Occurrence.objects.get(pk=occ.pk)
+        self.assertRedirects(self.response, 'http://testserver%s' % reverse('event', args=[occ.event.pk]))
+        self.assertEqual(occ.cancelled, True)
 
 
 class MySeleniumTests(LiveServerTestCase):
