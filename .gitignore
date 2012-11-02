@@ -1,8 +1,8 @@
 *.swp
 *~
 *.pyc
-/example/chromedriver.log
 /example/config/db/example.db
 /docs/_build/
 django_schedule.egg-info
 /coverage
+chromedriver.log
