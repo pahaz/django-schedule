@@ -50,7 +50,7 @@ class Period(object):
             return occurrences
 
         if hasattr(self.events, 'prefetch_related'):
-            self.events = self.events.prefetch_related('rule')
+            self.events = self.events.prefetch_related('rule', 'occurrence_set')
         for event in self.events:
             event_occurrences = event.get_occurrences(self.start, self.end)
             occurrences += event_occurrences
