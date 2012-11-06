@@ -41,7 +41,7 @@ def day_cell(context,  calendar, day, month, size="regular"):
 
 
 @register.inclusion_tag("events/_daily_table.html", takes_context=True)
-def daily_table(context, day, width, width_slot, height, start=8, end=20, increment=30, include_all_day=False):
+def daily_table(context, day, width, width_slot, height, start=8, end=20, increment=30, include_all_day=False, occurrence_pool=None):
     """
     Display a nice table with occurrences and action buttons.
 
@@ -59,6 +59,8 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
     context['addable'] = CHECK_PERMISSION_FUNC(None, user)
     width_occ = width - width_slot
     day_part = day.get_time_slot(day.start + datetime.timedelta(hours=start), day.start + datetime.timedelta(hours=end))
+    if occurrence_pool:
+        day_part.occurrence_pool = occurrence_pool
     occurrences = day_part.get_occurrences()
 
     # if include_all_day is False then remove all day events
@@ -81,6 +83,7 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
 def all_day_events_list(context, period):
     context['all_day_occurrences'] = period.get_all_day_occurrences()
     context['can_edit'] = CHECK_PERMISSION_FUNC(None, context['request'].user)
+    context['occurrence_pool'] = period.occurrences
     return context
 
 

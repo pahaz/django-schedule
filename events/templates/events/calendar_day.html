@@ -20,11 +20,11 @@
 
     <div class="row-fluid">
         <div id="am-col" class="span6{% if periods.day.is_today %} today{% endif %}">
-            {% daily_table periods.day 570 80 600 0 12 %}
+            {% daily_table periods.day 570 80 600 0 12 occurrence_pool=occurrence_pool %}
         </div>
 
         <div id="pm-col" class="span6{% if periods.day.is_today %} today{% endif %}">
-            {% daily_table periods.day 570 80 600 12 24 %}
+            {% daily_table periods.day 570 80 600 12 24 occurrence_pool=occurrence_pool %}
         </div>
     </div>
 
