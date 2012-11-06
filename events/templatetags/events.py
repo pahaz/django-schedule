@@ -58,9 +58,7 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
     user = context['request'].user
     context['addable'] = CHECK_PERMISSION_FUNC(None, user)
     width_occ = width - width_slot
-    day_part = day.get_time_slot(day.start + datetime.timedelta(hours=start), day.start + datetime.timedelta(hours=end))
-    if occurrence_pool:
-        day_part.occurrence_pool = occurrence_pool
+    day_part = day.get_time_slot(day.start + datetime.timedelta(hours=start), day.start + datetime.timedelta(hours=end), occurrence_pool=occurrence_pool)
     occurrences = day_part.get_occurrences()
 
     # if include_all_day is False then remove all day events
@@ -80,7 +78,9 @@ def daily_table(context, day, width, width_slot, height, start=8, end=20, increm
 
 
 @register.inclusion_tag("events/_all_day_event_list.html", takes_context=True)
-def all_day_events_list(context, period):
+def all_day_events_list(context, period, occurrence_pool=None):
+    if occurrence_pool:
+        period.occurrence_pool = occurrence_pool
     context['all_day_occurrences'] = period.get_all_day_occurrences()
     context['can_edit'] = CHECK_PERMISSION_FUNC(None, context['request'].user)
     context['occurrence_pool'] = period.occurrences

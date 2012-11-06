@@ -148,19 +148,23 @@ class Period(object):
                 return True
         return False
 
-    def get_time_slot(self, start, end):
+    def get_time_slot(self, start, end, occurrence_pool=None):
         if start >= self.start and end <= self.end:
-            return Period(self.events, start, end)
+            return Period(self.events, start, end, occurrence_pool=occurrence_pool)
         return None
 
-    def create_sub_period(self, cls, start=None):
+    def create_sub_period(self, cls, start=None, occurrence_pool=None):
         start = start or self.start
-        return cls(self.events, start, self.get_persisted_occurrences(), self.occurrences)
+        if occurrence_pool:
+            occurrences = occurrence_pool
+        else:
+            occurrences = self.occurrences
+        return cls(self.events, start, parent_persisted_occurrences=self.get_persisted_occurrences(), occurrence_pool=occurrences)
 
-    def get_periods(self, cls):
-        period = self.create_sub_period(cls)
+    def get_periods(self, cls, occurrence_pool=None):
+        period = self.create_sub_period(cls, occurrence_pool=occurrence_pool)
         while period.start < self.end:
-            yield self.create_sub_period(cls, period.start)
+            yield self.create_sub_period(cls, period.start, occurrence_pool=occurrence_pool)
             period = period.next()
 
 
@@ -284,8 +288,14 @@ class Week(Period):
     def current_year(self):
         return Year(self.events, self.start)
 
+    def get_days_array(self):
+        days = []
+        for day in self.get_days():
+            days.append(day)
+        return days
+
     def get_days(self):
-        return self.get_periods(Day)
+        return self.get_periods(Day, self.occurrences)
 
     def _get_week_range(self, week):
 
