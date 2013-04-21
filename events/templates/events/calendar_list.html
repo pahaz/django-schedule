@@ -1,0 +1,45 @@
+{% extends "events/base.html" %}
+
+{% load url from future %}
+
+{% block title %}Available Calendars{% endblock %}
+
+{% block base_content %}
+
+<div class="page-header">
+    <h1>Available Calendars</h1>
+</div>
+
+{% if object_list %}
+
+<table class="table table-hover">
+    {% for cal in object_list %}
+    <tr>
+        <th>{{ cal }}</th>
+        <td>
+            <div class="btn-group">
+                <a class="btn" href="{% url 'day_calendar' cal.slug %}">Day</a>
+                <a class="btn" href="{% url 'week_calendar' cal.slug %}">Week</a>
+                <a class="btn" href="{% url 'compact_calendar' cal.slug %}">Small Month</a>
+                <a class="btn" href="{% url 'month_calendar' cal.slug %}">Month</a>
+                <a class="btn" href="{% url 'tri_month_calendar' cal.slug %}">3 Months</a>
+                <a class="btn" href="{% url 'year_calendar' cal.slug %}">Year</a>
+                <a class="btn" href="{% url 'upcoming_events_feed' cal.id %}">Atom Feed</a>
+            </div>
+        </td>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<h2>It doesn't look like you have any calendars or events yet &hellip;</h2>
+
+<p>The example site comes with a management command that will load some example data:</p>
+
+<p><pre><code>$ django-admin.py load_example_data</code></pre></p>
+
+{% endif %}
+
+
+
+{% endblock %}

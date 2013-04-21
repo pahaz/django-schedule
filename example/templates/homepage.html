@@ -1,0 +1,25 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block tab_id %}id="home_tab"{% endblock %}
+
+{% block base_content %}
+
+    <div class="hero-unit">
+        {% blocktrans %}
+        <h1>Django-schedule Example Site</h1>
+        {% endblocktrans %}
+
+        {% blocktrans %}
+        <p>Welcome to Django-schedule's example site. Congratulations, if you're reading this then you've taken the necessary steps to successfully setup an example site! Now poke around and kick the tires!</p>
+        {% endblocktrans %}
+
+        <p><a class="btn btn-primary btn-large" href="{% url 'events' %}">{% trans "View the List of Available Calendars" %}</a></p>
+
+    </div>
+
+{% endblock %}

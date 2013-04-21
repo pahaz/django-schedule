@@ -1,0 +1,19 @@
+{% extends "events/base.html" %}
+
+{% load events %}
+
+{% block title %}{{ calendar.name }} ({{ periods.month }} {{ periods.month.year }}){% endblock title %}
+
+{% block base_content %}
+
+{% include "events/_dialogs.html" %}
+
+{% include "events/_cal_nav.html" with period=periods.month today_view_name="month_calendar" %}
+
+<div class="table-wrap">
+
+  {% month_table calendar periods.month "regular" %}
+
+</div>
+
+{% endblock %}

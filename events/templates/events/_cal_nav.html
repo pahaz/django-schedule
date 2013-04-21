@@ -1,0 +1,27 @@
+{% load events  %}
+
+{% load url from future %}
+
+<nav class="cal-top-nav clearfix">
+
+    <div class="pull-left">
+
+        <div class="today"><a class="btn" href="{% ifequal today_view_name 'year_calendar' %}{% url 'day_calendar' calendar.slug %}{% else %}{% url today_view_name calendar.slug %}{% endifequal %}">Today</a></div>
+
+        {% prevnext today_view_name calendar.slug period "l, F d, Y"%}
+
+        <div class="period-name">{% ifequal today_view_name "tri_month_calendar" %}{{ period.prev_month }} - {{ period.next_month }}{% else %}{{ period }}{% endifequal %}</div>
+
+    </div>
+
+    <div class="pull-right">
+        <div class="other-views btn-group">
+            <a class="btn" href="{% url 'day_calendar' calendar.slug %}{% querystring_for_date period.start 3 %}">Day</a>
+            <a class="btn" href="{% url 'week_calendar' calendar.slug %}{% querystring_for_date period.start 3 %}">Week</a>
+            <a class="btn" href="{% url 'month_calendar' calendar.slug %}{% querystring_for_date period.start 2 %}">Month</a>
+            <a class="btn" href="{% url 'tri_month_calendar' calendar.slug %}{% querystring_for_date period.start 2 %}">3 Month</a>
+            <a class="btn" href="{% url 'year_calendar' calendar.slug %}{% querystring_for_date period.start 1%}">Year</a>
+        </div>
+    </div>
+
+</nav>

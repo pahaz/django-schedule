@@ -1,0 +1,82 @@
+{% extends "events/base.html" %}
+
+{% load bootstrap %}
+
+{% block bottom_script %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.timePicker.js"></script>
+    <script type="text/javascript">
+    $(function() {
+
+        function toggle_all_day() {
+            if (typeof(init_start_val) === 'undefined') {
+                init_start_val = '00:00:00'
+            }
+            if (typeof(init_end_val) === 'undefined') {
+                init_end_val = '23:59:59'
+            }
+            if ($('#id_start_1').val() !== init_start_val) {
+                init_start_val = $('#id_start_1').val();
+            }
+            if ($('#id_end_1').val() !== init_end_val) {
+                init_end_val = $('#id_end_1').val();
+            }
+            if ($('#id_all_day').attr('checked') === undefined) {
+                $('#id_end_1').val(init_end_val).show();
+                $('#id_start_1').val(init_start_val).show();
+            } else {
+                $('#id_end_1').val(init_end_val).hide();
+                $('#id_start_1').val(init_start_val).hide();
+            }
+        }
+
+        $("#id_start_0").datepicker({dateFormat: $.datepicker.ATOM});
+        $("#id_end_0").datepicker({dateFormat: $.datepicker.ATOM});
+        $("#id_start_1").timePicker();
+        $("#id_end_1").timePicker();
+        $("#id_end_recurring_period").datepicker({dateFormat: $.datepicker.ATOM});
+        var oldTime = $.timePicker("#id_start_1").getTime();
+        $("#id_start_1").change(function() {
+            if ($("#id_end_1").val()) { // Only update when second input has a value.
+                // Calculate duration.
+                var duration = ($.timePicker("#id_end_1").getTime() - oldTime);
+                var time = $.timePicker("#id_start_1").getTime();
+                // Calculate and update the time in the second input.
+                $.timePicker("#id_end_1").setTime(new Date(new Date(time.getTime() + duration)));
+                oldTime = time;
+            }
+        });
+
+        // Validate.
+        // TODO this should validate date AND time
+        $("#id_end_1").change(function() {
+            if($.timePicker("#id_start_1").getTime() > $.timePicker(this).getTime()) {
+                $(this).addClass("error");
+            }
+            else {
+                $(this).removeClass("error");
+            }
+        });
+
+        // Toggle all day event
+        toggle_all_day();
+        $('#id_all_day').change(function() { toggle_all_day(); });
+
+    });
+    </script>
+{% endblock %}
+
+{% block base_content %}
+<form action="." method="post" class="form-horizontal">{% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <div class="form-actions">
+        <button class="btn" onclick="window.location='{{ next }}'; return false;">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <input type="hidden" name="next" value="{{ next|default:"" }}">
+    </div>
+
+</form>
+{% endblock %}
+

@@ -1,0 +1,33 @@
+{% extends "events/base.html" %}
+
+{% load events %}
+
+{% block title %}{{ calendar.name }} ({{ periods.day }}){% endblock title %}
+
+{% block base_content %}
+
+{% include "events/_cal_nav.html" with period=periods.day today_view_name="day_calendar" %}
+
+{% include "events/_dialogs.html" %}
+
+<div id="day-wrap">
+
+    <div class="row-fluid">
+        <div class="all-day-events span12">
+            {% all_day_events_list periods.day %}
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div id="am-col" class="span6{% if periods.day.is_today %} today{% endif %}">
+            {% daily_table periods.day 570 80 600 0 12 occurrence_pool=occurrence_pool %}
+        </div>
+
+        <div id="pm-col" class="span6{% if periods.day.is_today %} today{% endif %}">
+            {% daily_table periods.day 570 80 600 12 24 occurrence_pool=occurrence_pool %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "events/base.html" %}
+{% load i18n %}
+{% load events %}
+{% load url from future %}
+
+{% block title %}{{ event.title }}{% endblock title %}
+
+{% block base_content %}
+
+<div id="event-detail-wrap">
+
+    <nav class="cal-top-nav clearfix">
+
+        <div class="pull-left">
+
+            <div class="period-name">
+                <strong>{{ occurrence.title }}</strong>
+                {% if occurrence|can_edit_event:request.user %}
+                <span class="actions">
+                    <span class="edit"><a class="edit-link" href="{% url 'edit_occurrence' occurrence.event.id occurrence.id %}"><i class="icon-pencil"></i></a></span>
+                    <span class="delete"><a class="delete-link" href="{% url 'cancel_occurrence' occurrence.event.id occurrence.id %}"><i class="icon-trash"></i></a></span>
+                </span>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="pull-right">
+            <div class="other-views btn-group">
+                {% with occurrence.event as event %}
+                <a class="btn" href="{% url 'day_calendar' event.calendar.slug %}{% querystring_for_date event.start 3 %}">Day</a>
+                <a class="btn" href="{% url 'week_calendar' event.calendar.slug %}{% querystring_for_date event.start 3 %}">Week</a>
+                <a class="btn" href="{% url 'month_calendar' event.calendar.slug %}{% querystring_for_date event.start 2 %}">Month</a>
+                <a class="btn" href="{% url 'tri_month_calendar' event.calendar.slug %}{% querystring_for_date event.start 2 %}">3 Month</a>
+                <a class="btn" href="{% url 'year_calendar' event.calendar.slug %}{% querystring_for_date event.start 1%}">Year</a>
+                {% endwith %}
+            </div>
+        </div>
+
+    </nav>
+
+    <table class="table table-bordered">
+        <tr>
+            <td>Starts</td>
+            <td>{% blocktrans with occurrence.start|date:_("DATETIME_FORMAT") as start_date %}{{ start_date }}{% endblocktrans %}</td>
+        </tr>
+        <tr>
+            <td>Ends</td>
+            <td>{% blocktrans with occurrence.end|date:_("DATETIME_FORMAT") as end_date %}{{ end_date }}{% endblocktrans %}</td>
+        </tr>
+        <tr>
+            {% if occurrence.event.rule %}
+            <td>Reoccurs</td>
+            <td>{{ occurrence.event.rule }} until {% blocktrans with occurrence.event.end_recurring_period|date:_("DATETIME_FORMAT") as end_recurring_date %}{{ end_recurring_date }}{% endblocktrans %}</td>
+            {% endif %}
+        </tr>
+    </table>
+
+    {% if occurrence.description %}
+    <h3>Description</h3>
+    <p>{{ occurrence.description }}</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

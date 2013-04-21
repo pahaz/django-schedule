@@ -1,0 +1,15 @@
+{% extends "events/base.html" %}
+
+{% load events %}
+
+{% block title %}{{ calendar.name }} ({{ periods.month }} {{ periods.month.year }}){% endblock title %}
+
+{% block base_content %}
+
+{% include "events/_cal_nav.html" with period=periods.month today_view_name="compact_calendar" %}
+
+<div class="compact-month-wrap">
+    {% month_table calendar periods.month "small" %}
+</div>
+
+{% endblock %}

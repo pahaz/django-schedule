@@ -1,0 +1,50 @@
+{% extends "events/base.html" %}
+
+{% load events %}
+{% load url from future %}
+
+{% block title %}{{ calendar.name }} ({{ periods.week }}){% endblock title %}
+
+{% block base_content %}
+
+{% include "events/_dialogs.html" %}
+
+{% include "events/_cal_nav.html" with period=periods.week today_view_name="week_calendar" %}
+
+<div id="week-wrap">
+
+    {% with periods.week.get_days_array as days %}
+    <table style="width: 100%;">
+        <tr class="weekdayheader">
+            {% for day in days %}
+            <th class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}"><a href="{% url 'day_calendar' calendar.slug %}{% querystring_for_date day.start %}">{{ day.start|date:"l, d" }}</a></th>
+            {% endfor %}
+        </tr>
+
+        <tr class="all-day-events">
+            {% for day in days %}
+            <td class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">{% all_day_events_list day occurrence_pool=day.occurrence_pool %}<div>&nbsp;</div></td>
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for day in days %}
+            <td class="weekday weekday{{ forloop.counter }}{% if day.is_today %} today{% endif %}">
+                <div class="weekdaytable">
+                {% if forloop.first %}
+                {% daily_table day 257 80 600 9 21 occurrence_pool=day.occurrence_pool %}
+                {% else %}
+                {% daily_table day 151 21 600 9 21 occurrence_pool=day.occurrence_pool %}
+                {% endif %}
+                </div>
+            </td>
+            {% endfor %}
+        </tr>
+
+    </table>
+    {% endwith %}
+
+
+</div>
+
+{% endblock %}

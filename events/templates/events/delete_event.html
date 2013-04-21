@@ -1,0 +1,23 @@
+{% extends "events/base.html" %}
+{% load i18n %}
+
+{% block title %}Delete Event{% endblock title %}
+
+{% block base_content %}
+<h1>{% trans "Delete" %}</h1>
+
+<p>{% trans "Are you sure that you really want to delete it?" %}</p>
+
+<form action="." method="POST">
+
+    <p>{{ object }}</p>
+
+    <div class="form-actions">
+        <button class="btn" onclick="window.location='{{ next }}'; return false;">{% trans "Cancel" %}</button>
+        <button class="btn btn-primary" type="submit">{% trans "Delete" %}</button>
+        <input type="hidden" name="next" value="{{ next|default:"" }}">
+        {% csrf_token %}
+    </div>
+
+</form>
+{% endblock %}

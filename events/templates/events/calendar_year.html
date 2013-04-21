@@ -1,0 +1,22 @@
+{% extends "events/base.html" %}
+
+{% load events %}
+{% load url from future %}
+
+{% block title %}{{ calendar.name }} ({{ periods.year }}){% endblock title %}
+
+{% block base_content %}
+
+{% include "events/_cal_nav.html" with period=periods.year today_view_name="year_calendar" %}
+
+<div id="year-wrap" class="small-cal">
+
+    {% for month in periods.year.get_months %}
+    <div class="month month{{ forloop.counter }}">
+        <h3><a href="{% url 'month_calendar' calendar.slug %}{% querystring_for_date month.start 2 %}">{{month.name}}</a></h3>
+        {% month_table calendar month "small" %}
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

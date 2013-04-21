@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Sign in{% endblock title %}
+
+{% block base_content %}
+
+<div class="row">
+
+    <div class="span5 offset3">
+        {% if request.REQUEST.signout %}
+            <h4 style="margin-bottom: 2em; text-align: center;">You have successfully signed out.</h4>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="alert alert-error" style="text-align: center;"><strong>Your username and password didn't match. Please try again.</strong></div>
+        {% endif %}
+
+        <form method="post" action="{% url 'signin' %}" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">{{ form.username.label }}</label>
+                <div class="controls">
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword">{{ form.password.label }}</label>
+                <div class="controls">
+                    {{ form.password }}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">Sign in</button>
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% csrf_token %}
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
